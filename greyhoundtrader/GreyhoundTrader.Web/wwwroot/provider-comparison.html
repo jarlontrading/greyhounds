@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Provider Price Comparison - Racing Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/provider-comparison.css?v=20260803-betfred">
+</head>
+<body>
+  <header class="comparison-header">
+    <div>
+      <span class="eyebrow">Racing Trader diagnostics</span>
+      <h1>Provider price comparison</h1>
+      <p>Runner-by-runner speed and price differences across the three live feeds.</p>
+    </div>
+    <div class="connection-block">
+      <span id="liveState" class="live-state waiting"><i></i> Connecting</span>
+      <strong id="clock">--:--:--</strong>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Comparison controls">
+      <label>
+        <span>Sort</span>
+        <select id="sortMode">
+          <option value="price-gap">Largest Bet365 / BetsAPI price gap</option>
+          <option value="update-gap">Largest update-time gap</option>
+          <option value="latest">Most recently updated</option>
+          <option value="race">Race time and cloth number</option>
+        </select>
+      </label>
+      <label>
+        <span>Meeting</span>
+        <select id="meetingFilter"><option value="">All meetings</option></select>
+      </label>
+      <label class="check"><input id="differencesOnly" type="checkbox"> Price differences only</label>
+      <label class="check"><input id="missingOnly" type="checkbox"> Missing provider prices</label>
+      <label class="check"><input id="includeSettled" type="checkbox"> Include settled</label>
+      <label class="check"><input id="includeTomorrow" type="checkbox"> Include tomorrow</label>
+      <button id="refreshButton" type="button">Refresh now</button>
+    </section>
+
+    <section class="summary" aria-label="Feed summary">
+      <article><span>Visible runners</span><strong id="visibleCount">0</strong></article>
+      <article><span>Price differences</span><strong id="differenceCount">0</strong></article>
+      <article><span>Missing a feed</span><strong id="missingCount">0</strong></article>
+      <article><span>Bet365 browser newer</span><strong id="browserNewerCount">0</strong></article>
+      <article><span>BetsAPI newer</span><strong id="apiNewerCount">0</strong></article>
+    </section>
+
+    <section class="table-shell">
+      <table>
+        <thead>
+          <tr>
+            <th>Race</th>
+            <th>No.</th>
+            <th>Runner</th>
+            <th class="provider browser">Bet365 browser</th>
+            <th class="provider api">BetsAPI</th>
+            <th class="provider betfred">Betfred</th>
+            <th class="provider">BetAhoy</th>
+            <th class="provider spreadex">Spreadex</th>
+            <th>Price difference<br><small>Browser - API</small></th>
+            <th>Update lead<br><small>Browser vs API</small></th>
+            <th>Latest update</th>
+          </tr>
+        </thead>
+        <tbody id="comparisonRows">
+          <tr><td colspan="10" class="empty">Waiting for provider data...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="/provider-comparison.js?v=20261116-betahoy"></script>
+</body>
+</html>

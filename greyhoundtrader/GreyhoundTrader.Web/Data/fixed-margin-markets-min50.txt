@@ -1,0 +1,1136 @@
+GBGB FIXED WINNING-MARGIN MARKETS - MINIMUM 50 RACES
+Track/distance combinations: 125
+Source period: 2014 to 2 September 2026. All grades, going and runner counts combined.
+Distances and boundaries are in lengths unless marked metres.
+Prices: fair decimal odds (including stake), displayed to 3 decimal places.
+Underlying probabilities total 100%; displayed odds may differ slightly due to rounding.
+These are NOT bookmaker-ladder prices. No overround or runner-count uplift applied.
+Boundaries are fixed. Equality belongs to the lower band.
+Conversions: nose=0.05, short head=0.1, head=0.2, neck=0.3, dead heat=0.
+Invalid/missing margins excluded; no bookmaker settlement cap or void-race substitution.
+50 races is an inclusion threshold, not a guarantee of pricing reliability.
+
+Belle Vue | 260 metres | 335 races
+  2-WAY
+    1.5 or less: 1.893  (52.836%)
+    over 1.5: 2.120  (47.164%)
+  3-WAY
+    1 or less: 2.965  (33.731%)
+    over 1 up to and including 2: 3.045  (32.836%)
+    over 2: 2.991  (33.433%)
+
+Belle Vue | 470 metres | 14,326 races
+  2-WAY
+    1.25 or less: 2.088  (47.885%)
+    over 1.25: 1.919  (52.115%)
+  3-WAY
+    0.75 or less: 2.959  (33.799%)
+    over 0.75 up to and including 2.25: 2.919  (34.259%)
+    over 2.25: 3.131  (31.942%)
+
+Belle Vue | 590 metres | 696 races
+  2-WAY
+    1.5 or less: 2.023  (49.425%)
+    over 1.5: 1.977  (50.575%)
+  3-WAY
+    0.75 or less: 3.026  (33.046%)
+    over 0.75 up to and including 2.5: 2.841  (35.201%)
+    over 2.5: 3.149  (31.753%)
+
+Central Park | 265 metres | 6,845 races
+  2-WAY
+    1 or less: 2.174  (45.990%)
+    over 1: 1.852  (54.010%)
+  3-WAY
+    0.75 or less: 2.661  (37.575%)
+    over 0.75 up to and including 1.75: 3.341  (29.934%)
+    over 1.75: 3.078  (32.491%)
+
+Central Park | 277 metres | 4,178 races
+  2-WAY
+    1 or less: 2.168  (46.123%)
+    over 1: 1.856  (53.877%)
+  3-WAY
+    0.5 or less: 3.402  (29.392%)
+    over 0.5 up to and including 1.75: 2.626  (38.080%)
+    over 1.75: 3.074  (32.528%)
+
+Central Park | 450 metres | 167 races
+  2-WAY
+    1.75 or less: 1.920  (52.096%)
+    over 1.75: 2.087  (47.904%)
+  3-WAY
+    1 or less: 2.982  (33.533%)
+    over 1 up to and including 2.75: 3.275  (30.539%)
+    over 2.75: 2.783  (35.928%)
+
+Central Park | 480 metres | 11,299 races
+  2-WAY
+    1.5 or less: 1.902  (52.571%)
+    over 1.5: 2.108  (47.429%)
+  3-WAY
+    0.75 or less: 3.024  (33.065%)
+    over 0.75 up to and including 2.25: 2.952  (33.870%)
+    over 2.25: 3.024  (33.065%)
+
+Central Park | 491 metres | 3,873 races
+  2-WAY
+    1.25 or less: 2.051  (48.748%)
+    over 1.25: 1.951  (51.252%)
+  3-WAY
+    0.75 or less: 2.925  (34.185%)
+    over 0.75 up to and including 2.25: 2.991  (33.437%)
+    over 2.25: 3.089  (32.378%)
+
+Central Park | 500 metres | 114 races
+  2-WAY
+    2 or less: 1.966  (50.877%)
+    over 2: 2.036  (49.123%)
+  3-WAY
+    1.25 or less: 3.167  (31.579%)
+    over 1.25 up to and including 3: 2.923  (34.211%)
+    over 3: 2.923  (34.211%)
+
+Central Park | 642 metres | 630 races
+  2-WAY
+    1.5 or less: 2.086  (47.937%)
+    over 1.5: 1.921  (52.063%)
+  3-WAY
+    1 or less: 2.692  (37.143%)
+    over 1 up to and including 2.75: 3.264  (30.635%)
+    over 2.75: 3.103  (32.222%)
+
+Central Park | 664 metres | 204 races
+  2-WAY
+    2 or less: 1.962  (50.980%)
+    over 2: 2.040  (49.020%)
+  3-WAY
+    1 or less: 3.188  (31.373%)
+    over 1 up to and including 3.25: 2.957  (33.824%)
+    over 3.25: 2.873  (34.804%)
+
+Coventry | 450 metres | 77 races
+  2-WAY
+    1.5 or less: 2.139  (46.753%)
+    over 1.5: 1.878  (53.247%)
+  3-WAY
+    0.75 or less: 3.208  (31.169%)
+    over 0.75 up to and including 2: 2.962  (33.766%)
+    over 2: 2.852  (35.065%)
+
+Coventry | 485 metres | 109 races
+  2-WAY
+    1.25 or less: 1.912  (52.294%)
+    over 1.25: 2.096  (47.706%)
+  3-WAY
+    0.75 or less: 3.028  (33.028%)
+    over 0.75 up to and including 1.75: 3.028  (33.028%)
+    over 1.75: 2.946  (33.945%)
+
+Crayford | 380 metres | 29,806 races
+  2-WAY
+    1.75 or less: 1.907  (52.442%)
+    over 1.75: 2.103  (47.558%)
+  3-WAY
+    1 or less: 2.953  (33.859%)
+    over 1 up to and including 2.5: 2.998  (33.356%)
+    over 2.5: 3.050  (32.785%)
+
+Crayford | 540 metres | 7,588 races
+  2-WAY
+    1.75 or less: 2.057  (48.603%)
+    over 1.75: 1.946  (51.397%)
+  3-WAY
+    1 or less: 3.111  (32.143%)
+    over 1 up to and including 2.75: 3.092  (32.341%)
+    over 2.75: 2.816  (35.517%)
+
+Crayford | 714 metres | 1,203 races
+  2-WAY
+    2.25 or less: 1.995  (50.125%)
+    over 2.25: 2.005  (49.875%)
+  3-WAY
+    1.25 or less: 2.956  (33.832%)
+    over 1.25 up to and including 3.75: 3.023  (33.084%)
+    over 3.75: 3.023  (33.084%)
+
+Crayford | 874 metres | 130 races
+  2-WAY
+    2.75 or less: 1.912  (52.308%)
+    over 2.75: 2.097  (47.692%)
+  3-WAY
+    1.5 or less: 3.095  (32.308%)
+    over 1.5 up to and including 5: 2.955  (33.846%)
+    over 5: 2.955  (33.846%)
+
+Doncaster | 275 metres | 5,900 races
+  2-WAY
+    1.25 or less: 2.051  (48.763%)
+    over 1.25: 1.952  (51.237%)
+  3-WAY
+    0.75 or less: 3.009  (33.237%)
+    over 0.75 up to and including 2: 3.026  (33.051%)
+    over 2: 2.966  (33.712%)
+
+Doncaster | 450 metres | 12,958 races
+  2-WAY
+    1.5 or less: 1.959  (51.057%)
+    over 1.5: 2.043  (48.943%)
+  3-WAY
+    0.75 or less: 3.086  (32.405%)
+    over 0.75 up to and including 2.25: 3.020  (33.115%)
+    over 2.25: 2.900  (34.481%)
+
+Doncaster | 483 metres | 7,955 races
+  2-WAY
+    1.25 or less: 2.120  (47.178%)
+    over 1.25: 1.893  (52.822%)
+  3-WAY
+    0.75 or less: 2.978  (33.576%)
+    over 0.75 up to and including 2.25: 2.950  (33.903%)
+    over 2.25: 3.075  (32.520%)
+
+Doncaster | 661 metres | 227 races
+  2-WAY
+    2 or less: 2.009  (49.780%)
+    over 2: 1.991  (50.220%)
+  3-WAY
+    1.25 or less: 2.768  (36.123%)
+    over 1.25 up to and including 3.5: 3.197  (31.278%)
+    over 3.5: 3.068  (32.599%)
+
+Dunstall Park | 270 metres | 685 races
+  2-WAY
+    1 or less: 2.161  (46.277%)
+    over 1: 1.861  (53.723%)
+  3-WAY
+    0.75 or less: 2.773  (36.058%)
+    over 0.75 up to and including 1.75: 2.978  (33.577%)
+    over 1.75: 3.293  (30.365%)
+
+Dunstall Park | 480 metres | 1,503 races
+  2-WAY
+    1.25 or less: 2.009  (49.767%)
+    over 1.25: 1.991  (50.233%)
+  3-WAY
+    0.75 or less: 2.863  (34.930%)
+    over 0.75 up to and including 2: 3.218  (31.071%)
+    over 2: 2.941  (33.999%)
+
+Hall Green | 258 metres | 78 races
+  2-WAY
+    1.25 or less: 2.167  (46.154%)
+    over 1.25: 1.857  (53.846%)
+  3-WAY
+    0.75 or less: 2.889  (34.615%)
+    over 0.75 up to and including 2: 3.120  (32.051%)
+    over 2: 3.000  (33.333%)
+
+Hall Green | 480 metres | 8,443 races
+  2-WAY
+    1.25 or less: 2.051  (48.762%)
+    over 1.25: 1.952  (51.238%)
+  3-WAY
+    0.75 or less: 2.988  (33.472%)
+    over 0.75 up to and including 2.25: 2.868  (34.869%)
+    over 2.25: 3.159  (31.659%)
+
+Hall Green | 645 metres | 156 races
+  2-WAY
+    1.5 or less: 1.950  (51.282%)
+    over 1.5: 2.053  (48.718%)
+  3-WAY
+    0.75 or less: 2.836  (35.256%)
+    over 0.75 up to and including 2.75: 3.000  (33.333%)
+    over 2.75: 3.184  (31.410%)
+
+Harlow | 238 metres | 14,477 races
+  2-WAY
+    1.25 or less: 2.074  (48.221%)
+    over 1.25: 1.931  (51.779%)
+  3-WAY
+    1 or less: 2.730  (36.624%)
+    over 1 up to and including 2: 3.095  (32.306%)
+    over 2: 3.219  (31.070%)
+
+Harlow | 415 metres | 17,759 races
+  2-WAY
+    1.75 or less: 1.913  (52.272%)
+    over 1.75: 2.095  (47.728%)
+  3-WAY
+    1 or less: 3.002  (33.307%)
+    over 1 up to and including 2.5: 3.159  (31.657%)
+    over 2.5: 2.854  (35.036%)
+
+Harlow | 592 metres | 810 races
+  2-WAY
+    2 or less: 2.005  (49.877%)
+    over 2: 1.995  (50.123%)
+  3-WAY
+    1 or less: 3.361  (29.753%)
+    over 1 up to and including 3.25: 2.822  (35.432%)
+    over 3.25: 2.872  (34.815%)
+
+Henlow | 277 metres | 1,274 races
+  2-WAY
+    1.5 or less: 2.078  (48.116%)
+    over 1.5: 1.927  (51.884%)
+  3-WAY
+    1 or less: 2.746  (36.421%)
+    over 1 up to and including 2.25: 3.443  (29.042%)
+    over 2.25: 2.895  (34.537%)
+
+Henlow | 428 metres | 326 races
+  2-WAY
+    2 or less: 1.874  (53.374%)
+    over 2: 2.145  (46.626%)
+  3-WAY
+    1 or less: 3.135  (31.902%)
+    over 1 up to and including 2.75: 2.991  (33.436%)
+    over 2.75: 2.885  (34.663%)
+
+Henlow | 460 metres | 18,779 races
+  2-WAY
+    1.75 or less: 1.913  (52.276%)
+    over 1.75: 2.095  (47.724%)
+  3-WAY
+    1 or less: 2.670  (37.451%)
+    over 1 up to and including 2.75: 3.060  (32.675%)
+    over 2.75: 3.347  (29.874%)
+
+Henlow | 550 metres | 1,571 races
+  2-WAY
+    1.75 or less: 2.040  (49.013%)
+    over 1.75: 1.961  (50.987%)
+  3-WAY
+    1 or less: 2.867  (34.882%)
+    over 1 up to and including 2.75: 3.259  (30.681%)
+    over 2.75: 2.904  (34.437%)
+
+Henlow | 692 metres | 173 races
+  2-WAY
+    2.75 or less: 1.989  (50.289%)
+    over 2.75: 2.012  (49.711%)
+  3-WAY
+    1.75 or less: 3.089  (32.370%)
+    over 1.75 up to and including 4: 2.932  (34.104%)
+    over 4: 2.983  (33.526%)
+
+Hove | 285 metres | 6,606 races
+  2-WAY
+    1 or less: 2.034  (49.152%)
+    over 1: 1.967  (50.848%)
+  3-WAY
+    0.5 or less: 3.395  (29.458%)
+    over 0.5 up to and including 1.5: 2.727  (36.664%)
+    over 1.5: 2.952  (33.878%)
+
+Hove | 475 metres | 384 races
+  2-WAY
+    1.5 or less: 2.021  (49.479%)
+    over 1.5: 1.979  (50.521%)
+  3-WAY
+    1 or less: 2.954  (33.854%)
+    over 1 up to and including 2.25: 3.122  (32.031%)
+    over 2.25: 2.931  (34.115%)
+
+Hove | 490 metres | 1,263 races
+  2-WAY
+    1.25 or less: 2.005  (49.881%)
+    over 1.25: 1.995  (50.119%)
+  3-WAY
+    0.75 or less: 2.838  (35.234%)
+    over 0.75 up to and including 2: 3.119  (32.067%)
+    over 2: 3.058  (32.700%)
+
+Hove | 500 metres | 16,466 races
+  2-WAY
+    1.25 or less: 1.901  (52.611%)
+    over 1.25: 2.110  (47.389%)
+  3-WAY
+    0.5 or less: 3.451  (28.981%)
+    over 0.5 up to and including 1.75: 2.885  (34.659%)
+    over 1.75: 2.750  (36.360%)
+
+Hove | 515 metres | 14,317 races
+  2-WAY
+    1 or less: 2.074  (48.215%)
+    over 1: 1.931  (51.785%)
+  3-WAY
+    0.5 or less: 3.309  (30.223%)
+    over 0.5 up to and including 1.5: 3.070  (32.577%)
+    over 1.5: 2.688  (37.201%)
+
+Hove | 695 metres | 1,242 races
+  2-WAY
+    1.5 or less: 2.006  (49.839%)
+    over 1.5: 1.994  (50.161%)
+  3-WAY
+    0.75 or less: 3.209  (31.159%)
+    over 0.75 up to and including 2.5: 2.895  (34.541%)
+    over 2.5: 2.915  (34.300%)
+
+Hove | 740 metres | 82 races
+  2-WAY
+    1.75 or less: 2.000  (50.000%)
+    over 1.75: 2.000  (50.000%)
+  3-WAY
+    0.75 or less: 2.929  (34.146%)
+    over 0.75 up to and including 2.75: 2.929  (34.146%)
+    over 2.75: 3.154  (31.707%)
+
+Kinsley | 268 metres | 7,431 races
+  2-WAY
+    1 or less: 2.083  (48.015%)
+    over 1: 1.924  (51.985%)
+  3-WAY
+    0.75 or less: 2.644  (37.815%)
+    over 0.75 up to and including 1.75: 3.143  (31.813%)
+    over 1.75: 3.292  (30.373%)
+
+Kinsley | 462 metres | 22,491 races
+  2-WAY
+    1.25 or less: 2.118  (47.206%)
+    over 1.25: 1.894  (52.794%)
+  3-WAY
+    0.75 or less: 3.153  (31.715%)
+    over 0.75 up to and including 2: 2.986  (33.493%)
+    over 2: 2.874  (34.792%)
+
+Kinsley | 650 metres | 557 races
+  2-WAY
+    1.5 or less: 1.895  (52.783%)
+    over 1.5: 2.118  (47.217%)
+  3-WAY
+    0.75 or less: 3.276  (30.521%)
+    over 0.75 up to and including 2.25: 2.827  (35.368%)
+    over 2.25: 2.932  (34.111%)
+
+Mildenhall | 375 metres | 2,033 races
+  2-WAY
+    1.5 or less: 1.964  (50.910%)
+    over 1.5: 2.037  (49.090%)
+  3-WAY
+    0.75 or less: 3.268  (30.595%)
+    over 0.75 up to and including 2.25: 2.994  (33.399%)
+    over 2.25: 2.777  (36.006%)
+
+Mildenhall | 545 metres | 269 races
+  2-WAY
+    1.75 or less: 2.038  (49.071%)
+    over 1.75: 1.964  (50.929%)
+  3-WAY
+    1 or less: 2.924  (34.201%)
+    over 1 up to and including 2.75: 3.202  (31.227%)
+    over 2.75: 2.892  (34.572%)
+
+Monmore | 264 metres | 5,462 races
+  2-WAY
+    1 or less: 1.927  (51.886%)
+    over 1: 2.078  (48.114%)
+  3-WAY
+    0.5 or less: 3.243  (30.831%)
+    over 0.5 up to and including 1.5: 2.864  (34.914%)
+    over 1.5: 2.919  (34.255%)
+
+Monmore | 416 metres | 68 races
+  2-WAY
+    1.75 or less: 2.000  (50.000%)
+    over 1.75: 2.000  (50.000%)
+  3-WAY
+    1.25 or less: 3.400  (29.412%)
+    over 1.25 up to and including 2.5: 2.833  (35.294%)
+    over 2.5: 2.833  (35.294%)
+
+Monmore | 480 metres | 35,027 races
+  2-WAY
+    1.25 or less: 2.005  (49.870%)
+    over 1.25: 1.995  (50.130%)
+  3-WAY
+    0.75 or less: 2.837  (35.247%)
+    over 0.75 up to and including 2: 3.102  (32.241%)
+    over 2: 3.076  (32.512%)
+
+Monmore | 630 metres | 4,598 races
+  2-WAY
+    1.5 or less: 1.941  (51.522%)
+    over 1.5: 2.063  (48.478%)
+  3-WAY
+    0.75 or less: 3.005  (33.275%)
+    over 0.75 up to and including 2.25: 3.098  (32.275%)
+    over 2.25: 2.903  (34.450%)
+
+Monmore | 684 metres | 119 races
+  2-WAY
+    2 or less: 2.017  (49.580%)
+    over 2: 1.983  (50.420%)
+  3-WAY
+    1 or less: 3.306  (30.252%)
+    over 1 up to and including 3.25: 2.833  (35.294%)
+    over 3.25: 2.902  (34.454%)
+
+Newcastle | 290 metres | 1,682 races
+  2-WAY
+    1.25 or less: 2.059  (48.573%)
+    over 1.25: 1.945  (51.427%)
+  3-WAY
+    0.75 or less: 3.126  (31.986%)
+    over 0.75 up to and including 2: 2.735  (36.564%)
+    over 2: 3.180  (31.451%)
+
+Newcastle | 480 metres | 35,809 races
+  2-WAY
+    1.25 or less: 2.034  (49.175%)
+    over 1.25: 1.968  (50.825%)
+  3-WAY
+    0.75 or less: 2.924  (34.198%)
+    over 0.75 up to and including 2: 3.161  (31.640%)
+    over 2: 2.927  (34.162%)
+
+Newcastle | 640 metres | 1,213 races
+  2-WAY
+    1.25 or less: 2.070  (48.310%)
+    over 1.25: 1.935  (51.690%)
+  3-WAY
+    0.75 or less: 3.040  (32.894%)
+    over 0.75 up to and including 2: 3.126  (31.987%)
+    over 2: 2.847  (35.120%)
+
+Nottingham | 255 metres | 73 races
+  2-WAY
+    1.75 or less: 1.973  (50.685%)
+    over 1.75: 2.028  (49.315%)
+  3-WAY
+    1 or less: 3.042  (32.877%)
+    over 1 up to and including 2.5: 2.920  (34.247%)
+    over 2.5: 3.042  (32.877%)
+
+Nottingham | 305 metres | 2,122 races
+  2-WAY
+    1.25 or less: 2.058  (48.586%)
+    over 1.25: 1.945  (51.414%)
+  3-WAY
+    0.75 or less: 2.947  (33.930%)
+    over 0.75 up to and including 2: 3.153  (31.715%)
+    over 2: 2.911  (34.354%)
+
+Nottingham | 480 metres | 1,686 races
+  2-WAY
+    1.75 or less: 1.951  (51.246%)
+    over 1.75: 2.051  (48.754%)
+  3-WAY
+    1 or less: 2.824  (35.409%)
+    over 1 up to and including 3: 2.984  (33.511%)
+    over 3: 3.218  (31.079%)
+
+Nottingham | 500 metres | 27,500 races
+  2-WAY
+    1.25 or less: 2.023  (49.440%)
+    over 1.25: 1.978  (50.560%)
+  3-WAY
+    0.75 or less: 2.787  (35.887%)
+    over 0.75 up to and including 2.25: 3.117  (32.080%)
+    over 2.25: 3.122  (32.033%)
+
+Nottingham | 680 metres | 561 races
+  2-WAY
+    1.5 or less: 2.040  (49.020%)
+    over 1.5: 1.962  (50.980%)
+  3-WAY
+    0.75 or less: 3.099  (32.264%)
+    over 0.75 up to and including 2.75: 3.000  (33.333%)
+    over 2.75: 2.907  (34.403%)
+
+Nottingham | 730 metres | 91 races
+  2-WAY
+    2 or less: 2.068  (48.352%)
+    over 2: 1.936  (51.648%)
+  3-WAY
+    1 or less: 2.844  (35.165%)
+    over 1 up to and including 3: 2.935  (34.066%)
+    over 3: 3.250  (30.769%)
+
+Oxford | 253 metres | 1,749 races
+  2-WAY
+    1 or less: 2.130  (46.941%)
+    over 1: 1.885  (53.059%)
+  3-WAY
+    0.75 or less: 2.646  (37.793%)
+    over 0.75 up to and including 1.75: 3.376  (29.617%)
+    over 1.75: 3.068  (32.590%)
+
+Oxford | 450 metres | 7,267 races
+  2-WAY
+    1.5 or less: 1.965  (50.888%)
+    over 1.5: 2.036  (49.112%)
+  3-WAY
+    0.75 or less: 3.142  (31.829%)
+    over 0.75 up to and including 2.25: 3.004  (33.287%)
+    over 2.25: 2.867  (34.884%)
+
+Oxford | 650 metres | 571 races
+  2-WAY
+    1.75 or less: 2.061  (48.511%)
+    over 1.75: 1.942  (51.489%)
+  3-WAY
+    1 or less: 2.813  (35.552%)
+    over 1 up to and including 3: 3.244  (30.823%)
+    over 3: 2.974  (33.625%)
+
+Pelaw Grange | 245 metres | 169 races
+  2-WAY
+    1.5 or less: 2.086  (47.929%)
+    over 1.5: 1.920  (52.071%)
+  3-WAY
+    1 or less: 2.770  (36.095%)
+    over 1 up to and including 2.25: 3.380  (29.586%)
+    over 2.25: 2.914  (34.320%)
+
+Pelaw Grange | 435 metres | 10,051 races
+  2-WAY
+    1.75 or less: 1.945  (51.408%)
+    over 1.75: 2.058  (48.592%)
+  3-WAY
+    1 or less: 2.809  (35.598%)
+    over 1 up to and including 2.75: 2.980  (33.559%)
+    over 2.75: 3.242  (30.843%)
+
+Pelaw Grange | 590 metres | 155 races
+  2-WAY
+    2.5 or less: 1.987  (50.323%)
+    over 2.5: 2.013  (49.677%)
+  3-WAY
+    1.5 or less: 2.818  (35.484%)
+    over 1.5 up to and including 3.75: 3.039  (32.903%)
+    over 3.75: 3.163  (31.613%)
+
+Perry Barr | 275 metres | 5,367 races
+  2-WAY
+    1 or less: 2.103  (47.550%)
+    over 1: 1.907  (52.450%)
+  3-WAY
+    0.5 or less: 3.352  (29.830%)
+    over 0.5 up to and including 1.75: 2.658  (37.619%)
+    over 1.75: 3.072  (32.551%)
+
+Perry Barr | 480 metres | 23,477 races
+  2-WAY
+    1.25 or less: 1.998  (50.053%)
+    over 1.25: 2.002  (49.947%)
+  3-WAY
+    0.75 or less: 2.815  (35.520%)
+    over 0.75 up to and including 2: 3.283  (30.455%)
+    over 2: 2.939  (34.025%)
+
+Perry Barr | 660 metres | 347 races
+  2-WAY
+    1.75 or less: 2.065  (48.415%)
+    over 1.75: 1.939  (51.585%)
+  3-WAY
+    1 or less: 2.711  (36.888%)
+    over 1 up to and including 3.25: 3.126  (31.988%)
+    over 3.25: 3.213  (31.124%)
+
+Perry Barr | 710 metres | 150 races
+  2-WAY
+    2.25 or less: 1.974  (50.667%)
+    over 2.25: 2.027  (49.333%)
+  3-WAY
+    1.25 or less: 3.000  (33.333%)
+    over 1.25 up to and including 3.25: 3.125  (32.000%)
+    over 3.25: 2.885  (34.667%)
+
+Peterborough | 250 metres | 1,517 races
+  2-WAY
+    1.25 or less: 2.058  (48.583%)
+    over 1.25: 1.945  (51.417%)
+  3-WAY
+    0.75 or less: 3.071  (32.564%)
+    over 0.75 up to and including 2: 2.879  (34.740%)
+    over 2: 3.058  (32.696%)
+
+Peterborough | 420 metres | 412 races
+  2-WAY
+    1.75 or less: 2.020  (49.515%)
+    over 1.75: 1.981  (50.485%)
+  3-WAY
+    1 or less: 3.121  (32.039%)
+    over 1 up to and including 2.5: 3.098  (32.282%)
+    over 2.5: 2.803  (35.680%)
+
+Peterborough | 435 metres | 9,897 races
+  2-WAY
+    1.5 or less: 1.962  (50.965%)
+    over 1.5: 2.039  (49.035%)
+  3-WAY
+    0.75 or less: 3.130  (31.949%)
+    over 0.75 up to and including 2.25: 3.005  (33.283%)
+    over 2.25: 2.876  (34.768%)
+
+Peterborough | 620 metres | 628 races
+  2-WAY
+    1.75 or less: 1.956  (51.115%)
+    over 1.75: 2.046  (48.885%)
+  3-WAY
+    1 or less: 2.695  (37.102%)
+    over 1 up to and including 2.75: 3.237  (30.892%)
+    over 2.75: 3.124  (32.006%)
+
+Poole | 250 metres | 265 races
+  2-WAY
+    1.25 or less: 2.120  (47.170%)
+    over 1.25: 1.893  (52.830%)
+  3-WAY
+    0.75 or less: 3.046  (32.830%)
+    over 0.75 up to and including 2: 2.760  (36.226%)
+    over 2: 3.232  (30.943%)
+
+Poole | 450 metres | 11,109 races
+  2-WAY
+    1.25 or less: 2.114  (47.304%)
+    over 1.25: 1.898  (52.696%)
+  3-WAY
+    0.75 or less: 3.000  (33.333%)
+    over 0.75 up to and including 2.25: 2.904  (34.432%)
+    over 2.25: 3.102  (32.235%)
+
+Poole | 640 metres | 343 races
+  2-WAY
+    2 or less: 1.949  (51.312%)
+    over 2: 2.054  (48.688%)
+  3-WAY
+    1 or less: 3.035  (32.945%)
+    over 1 up to and including 3: 2.932  (34.111%)
+    over 3: 3.035  (32.945%)
+
+Romford | 225 metres | 435 races
+  2-WAY
+    1.5 or less: 2.014  (49.655%)
+    over 1.5: 1.986  (50.345%)
+  3-WAY
+    1 or less: 3.021  (33.103%)
+    over 1 up to and including 2.25: 2.862  (34.943%)
+    over 2.25: 3.129  (31.954%)
+
+Romford | 400 metres | 41,555 races
+  2-WAY
+    1.5 or less: 1.969  (50.786%)
+    over 1.5: 2.032  (49.214%)
+  3-WAY
+    0.75 or less: 3.327  (30.061%)
+    over 0.75 up to and including 2.25: 2.785  (35.904%)
+    over 2.25: 2.938  (34.034%)
+
+Romford | 575 metres | 6,269 races
+  2-WAY
+    1.75 or less: 1.949  (51.316%)
+    over 1.75: 2.054  (48.684%)
+  3-WAY
+    1 or less: 2.896  (34.535%)
+    over 1 up to and including 2.75: 3.168  (31.568%)
+    over 2.75: 2.950  (33.897%)
+
+Romford | 750 metres | 468 races
+  2-WAY
+    2.25 or less: 1.918  (52.137%)
+    over 2.25: 2.089  (47.863%)
+  3-WAY
+    1.25 or less: 2.871  (34.829%)
+    over 1.25 up to and including 3.5: 2.943  (33.974%)
+    over 3.5: 3.205  (31.197%)
+
+Shawfield | 300 metres | 55 races
+  2-WAY
+    1.75 or less: 1.964  (50.909%)
+    over 1.75: 2.037  (49.091%)
+  3-WAY
+    0.75 or less: 3.235  (30.909%)
+    over 0.75 up to and including 2.5: 3.056  (32.727%)
+    over 2.5: 2.750  (36.364%)
+
+Shawfield | 480 metres | 5,795 races
+  2-WAY
+    1.25 or less: 1.999  (50.026%)
+    over 1.25: 2.001  (49.974%)
+  3-WAY
+    0.75 or less: 3.058  (32.701%)
+    over 0.75 up to and including 2: 2.960  (33.788%)
+    over 2: 2.984  (33.512%)
+
+Sheffield | 280 metres | 8,633 races
+  2-WAY
+    1 or less: 2.019  (49.519%)
+    over 1: 1.981  (50.481%)
+  3-WAY
+    0.5 or less: 3.235  (30.916%)
+    over 0.5 up to and including 1.5: 2.989  (33.453%)
+    over 1.5: 2.807  (35.631%)
+
+Sheffield | 480 metres | 831 races
+  2-WAY
+    1.75 or less: 1.919  (52.106%)
+    over 1.75: 2.088  (47.894%)
+  3-WAY
+    1 or less: 2.968  (33.694%)
+    over 1 up to and including 2.5: 3.066  (32.611%)
+    over 2.5: 2.968  (33.694%)
+
+Sheffield | 500 metres | 30,198 races
+  2-WAY
+    1.25 or less: 1.917  (52.152%)
+    over 1.25: 2.090  (47.848%)
+  3-WAY
+    0.75 or less: 2.662  (37.559%)
+    over 0.75 up to and including 2: 3.282  (30.472%)
+    over 2: 3.128  (31.969%)
+
+Sheffield | 660 metres | 1,435 races
+  2-WAY
+    1.5 or less: 1.999  (50.035%)
+    over 1.5: 2.001  (49.965%)
+  3-WAY
+    0.75 or less: 2.983  (33.519%)
+    over 0.75 up to and including 2.5: 3.008  (33.240%)
+    over 2.5: 3.008  (33.240%)
+
+Sittingbourne | 265 metres | 409 races
+  2-WAY
+    1.25 or less: 2.119  (47.188%)
+    over 1.25: 1.894  (52.812%)
+  3-WAY
+    0.75 or less: 3.220  (31.051%)
+    over 0.75 up to and including 2: 2.709  (36.919%)
+    over 2: 3.122  (32.029%)
+
+Sittingbourne | 480 metres | 3,757 races
+  2-WAY
+    1.25 or less: 1.947  (51.371%)
+    over 1.25: 2.056  (48.629%)
+  3-WAY
+    0.75 or less: 2.818  (35.480%)
+    over 0.75 up to and including 2: 3.108  (32.180%)
+    over 2: 3.092  (32.340%)
+
+Sittingbourne | 500 metres | 89 races
+  2-WAY
+    2.25 or less: 1.935  (51.685%)
+    over 2.25: 2.070  (48.315%)
+  3-WAY
+    1.5 or less: 2.871  (34.831%)
+    over 1.5 up to and including 3.25: 3.069  (32.584%)
+    over 3.25: 3.069  (32.584%)
+
+Sittingbourne | 642 metres | 259 races
+  2-WAY
+    1.25 or less: 1.863  (53.668%)
+    over 1.25: 2.158  (46.332%)
+  3-WAY
+    0.75 or less: 2.910  (34.363%)
+    over 0.75 up to and including 2: 3.159  (31.660%)
+    over 2: 2.943  (33.977%)
+
+Star Pelaw | 245 metres | 608 races
+  2-WAY
+    1.5 or less: 1.987  (50.329%)
+    over 1.5: 2.013  (49.671%)
+  3-WAY
+    0.75 or less: 3.167  (31.579%)
+    over 0.75 up to and including 2: 3.102  (32.237%)
+    over 2: 2.764  (36.184%)
+
+Star Pelaw | 435 metres | 1,445 races
+  2-WAY
+    1.75 or less: 2.015  (49.619%)
+    over 1.75: 1.985  (50.381%)
+  3-WAY
+    1 or less: 3.108  (32.180%)
+    over 1 up to and including 2.75: 2.878  (34.740%)
+    over 2.75: 3.023  (33.080%)
+
+Star Pelaw | 590 metres | 133 races
+  2-WAY
+    2 or less: 2.046  (48.872%)
+    over 2: 1.956  (51.128%)
+  3-WAY
+    1.25 or less: 3.093  (32.331%)
+    over 1.25 up to and including 3.5: 2.956  (33.835%)
+    over 3.5: 2.956  (33.835%)
+
+Suffolk Downs | 220 metres | 457 races
+  2-WAY
+    1.5 or less: 1.920  (52.079%)
+    over 1.5: 2.087  (47.921%)
+  3-WAY
+    0.75 or less: 3.264  (30.635%)
+    over 0.75 up to and including 2: 2.804  (35.667%)
+    over 2: 2.968  (33.698%)
+
+Suffolk Downs | 388 metres | 4,389 races
+  2-WAY
+    1.75 or less: 1.959  (51.037%)
+    over 1.75: 2.042  (48.963%)
+  3-WAY
+    1 or less: 2.910  (34.359%)
+    over 1 up to and including 2.75: 2.918  (34.267%)
+    over 2.75: 3.187  (31.374%)
+
+Suffolk Downs | 548 metres | 330 races
+  2-WAY
+    2 or less: 2.037  (49.091%)
+    over 2: 1.964  (50.909%)
+  3-WAY
+    1.25 or less: 3.028  (33.030%)
+    over 1.25 up to and including 3.5: 3.000  (33.333%)
+    over 3.5: 2.973  (33.636%)
+
+Sunderland | 261 metres | 4,415 races
+  2-WAY
+    1.25 or less: 1.893  (52.820%)
+    over 1.25: 2.120  (47.180%)
+  3-WAY
+    0.75 or less: 2.780  (35.968%)
+    over 0.75 up to and including 1.75: 3.330  (30.034%)
+    over 1.75: 2.941  (33.998%)
+
+Sunderland | 450 metres | 30,569 races
+  2-WAY
+    1.25 or less: 2.085  (47.964%)
+    over 1.25: 1.922  (52.036%)
+  3-WAY
+    0.75 or less: 2.924  (34.195%)
+    over 0.75 up to and including 2.25: 2.924  (34.201%)
+    over 2.25: 3.164  (31.604%)
+
+Sunderland | 640 metres | 866 races
+  2-WAY
+    1.25 or less: 2.033  (49.192%)
+    over 1.25: 1.968  (50.808%)
+  3-WAY
+    0.75 or less: 2.936  (34.065%)
+    over 0.75 up to and including 2.25: 2.956  (33.834%)
+    over 2.25: 3.115  (32.102%)
+
+Swindon | 262 metres | 1,421 races
+  2-WAY
+    1.25 or less: 1.971  (50.739%)
+    over 1.25: 2.030  (49.261%)
+  3-WAY
+    0.75 or less: 2.900  (34.483%)
+    over 0.75 up to and including 2: 2.900  (34.483%)
+    over 2: 3.222  (31.034%)
+
+Swindon | 285 metres | 66 races
+  2-WAY
+    1.5 or less: 2.000  (50.000%)
+    over 1.5: 2.000  (50.000%)
+  3-WAY
+    0.75 or less: 3.143  (31.818%)
+    over 0.75 up to and including 2.5: 3.000  (33.333%)
+    over 2.5: 2.870  (34.848%)
+
+Swindon | 476 metres | 13,971 races
+  2-WAY
+    1.25 or less: 2.083  (48.007%)
+    over 1.25: 1.923  (51.993%)
+  3-WAY
+    0.75 or less: 2.915  (34.300%)
+    over 0.75 up to and including 2.25: 2.980  (33.555%)
+    over 2.25: 3.111  (32.145%)
+
+Swindon | 480 metres | 14,371 races
+  2-WAY
+    1.25 or less: 2.005  (49.878%)
+    over 1.25: 1.995  (50.122%)
+  3-WAY
+    0.75 or less: 2.828  (35.356%)
+    over 0.75 up to and including 2: 3.225  (31.007%)
+    over 2: 2.973  (33.637%)
+
+Swindon | 509 metres | 137 races
+  2-WAY
+    2 or less: 1.903  (52.555%)
+    over 2: 2.108  (47.445%)
+  3-WAY
+    1 or less: 3.341  (29.927%)
+    over 1 up to and including 2.5: 2.796  (35.766%)
+    over 2.5: 2.915  (34.307%)
+
+Swindon | 649 metres | 120 races
+  2-WAY
+    1.75 or less: 2.069  (48.333%)
+    over 1.75: 1.935  (51.667%)
+  3-WAY
+    0.75 or less: 3.158  (31.667%)
+    over 0.75 up to and including 2.5: 3.000  (33.333%)
+    over 2.5: 2.857  (35.000%)
+
+Swindon | 682 metres | 188 races
+  2-WAY
+    2 or less: 2.022  (49.468%)
+    over 2: 1.979  (50.532%)
+  3-WAY
+    1 or less: 3.032  (32.979%)
+    over 1 up to and including 3: 3.186  (31.383%)
+    over 3: 2.806  (35.638%)
+
+Swindon | 685 metres | 361 races
+  2-WAY
+    2 or less: 1.951  (51.247%)
+    over 2: 2.051  (48.753%)
+  3-WAY
+    1 or less: 2.888  (34.626%)
+    over 1 up to and including 3: 3.139  (31.856%)
+    over 3: 2.983  (33.518%)
+
+Towcester | 260 metres | 1,293 races
+  2-WAY
+    1.25 or less: 1.871  (53.442%)
+    over 1.25: 2.148  (46.558%)
+  3-WAY
+    0.75 or less: 2.739  (36.504%)
+    over 0.75 up to and including 1.75: 3.232  (30.936%)
+    over 1.75: 3.071  (32.560%)
+
+Towcester | 270 metres | 6,972 races
+  2-WAY
+    1 or less: 2.144  (46.644%)
+    over 1: 1.874  (53.356%)
+  3-WAY
+    0.5 or less: 3.433  (29.131%)
+    over 0.5 up to and including 1.75: 2.686  (37.235%)
+    over 1.75: 2.973  (33.635%)
+
+Towcester | 460 metres | 322 races
+  2-WAY
+    1.5 or less: 2.077  (48.137%)
+    over 1.5: 1.928  (51.863%)
+  3-WAY
+    1 or less: 2.850  (35.093%)
+    over 1 up to and including 2.75: 3.009  (33.230%)
+    over 2.75: 3.157  (31.677%)
+
+Towcester | 480 metres | 4,693 races
+  2-WAY
+    1.5 or less: 2.018  (49.563%)
+    over 1.5: 1.983  (50.437%)
+  3-WAY
+    0.75 or less: 3.261  (30.663%)
+    over 0.75 up to and including 2.25: 2.952  (33.880%)
+    over 2.25: 2.820  (35.457%)
+
+Towcester | 500 metres | 9,887 races
+  2-WAY
+    1.5 or less: 1.982  (50.460%)
+    over 1.5: 2.019  (49.540%)
+  3-WAY
+    0.75 or less: 3.097  (32.285%)
+    over 0.75 up to and including 2.25: 3.114  (32.113%)
+    over 2.25: 2.809  (35.602%)
+
+Towcester | 655 metres | 532 races
+  2-WAY
+    1.75 or less: 2.031  (49.248%)
+    over 1.75: 1.970  (50.752%)
+  3-WAY
+    1 or less: 2.714  (36.842%)
+    over 1 up to and including 3: 3.057  (32.707%)
+    over 3: 3.284  (30.451%)
+
+Towcester | 686 metres | 331 races
+  2-WAY
+    1.25 or less: 2.082  (48.036%)
+    over 1.25: 1.924  (51.964%)
+  3-WAY
+    0.75 or less: 2.929  (34.139%)
+    over 0.75 up to and including 2.25: 3.183  (31.420%)
+    over 2.25: 2.904  (34.441%)
+
+Towcester | 712 metres | 500 races
+  2-WAY
+    2 or less: 1.953  (51.200%)
+    over 2: 2.049  (48.800%)
+  3-WAY
+    1 or less: 3.205  (31.200%)
+    over 1 up to and including 3.5: 2.890  (34.600%)
+    over 3.5: 2.924  (34.200%)
+
+Valley | 260 metres | 2,896 races
+  2-WAY
+    1.5 or less: 2.018  (49.551%)
+    over 1.5: 1.982  (50.449%)
+  3-WAY
+    0.75 or less: 3.058  (32.700%)
+    over 0.75 up to and including 2.5: 2.831  (35.325%)
+    over 2.5: 3.127  (31.975%)
+
+Valley | 460 metres | 2,308 races
+  2-WAY
+    2 or less: 1.936  (51.646%)
+    over 2: 2.068  (48.354%)
+  3-WAY
+    1 or less: 3.090  (32.366%)
+    over 1 up to and including 3: 2.974  (33.622%)
+    over 3: 2.940  (34.012%)
+
+Valley | 645 metres | 93 races
+  2-WAY
+    2.5 or less: 1.979  (50.538%)
+    over 2.5: 2.022  (49.462%)
+  3-WAY
+    1.25 or less: 3.000  (33.333%)
+    over 1.25 up to and including 4.5: 2.906  (34.409%)
+    over 4.5: 3.100  (32.258%)
+
+Wimbledon | 273 metres | 58 races
+  2-WAY
+    1.75 or less: 2.000  (50.000%)
+    over 1.75: 2.000  (50.000%)
+  3-WAY
+    1 or less: 2.900  (34.483%)
+    over 1 up to and including 2.25: 3.222  (31.034%)
+    over 2.25: 2.900  (34.483%)
+
+Wimbledon | 480 metres | 3,379 races
+  2-WAY
+    1.5 or less: 1.971  (50.725%)
+    over 1.5: 2.029  (49.275%)
+  3-WAY
+    0.75 or less: 3.047  (32.820%)
+    over 0.75 up to and including 2.25: 3.039  (32.909%)
+    over 2.25: 2.918  (34.270%)
+
+Wimbledon | 687 metres | 120 races
+  2-WAY
+    2.5 or less: 1.967  (50.833%)
+    over 2.5: 2.034  (49.167%)
+  3-WAY
+    1.25 or less: 2.927  (34.167%)
+    over 1.25 up to and including 3.5: 2.927  (34.167%)
+    over 3.5: 3.158  (31.667%)
+
+Yarmouth | 277 metres | 896 races
+  2-WAY
+    1.25 or less: 2.098  (47.656%)
+    over 1.25: 1.910  (52.344%)
+  3-WAY
+    0.75 or less: 3.144  (31.808%)
+    over 0.75 up to and including 2: 2.890  (34.598%)
+    over 2: 2.977  (33.594%)
+
+Yarmouth | 462 metres | 22,883 races
+  2-WAY
+    1.5 or less: 1.901  (52.594%)
+    over 1.5: 2.109  (47.406%)
+  3-WAY
+    0.75 or less: 3.064  (32.636%)
+    over 0.75 up to and including 2.25: 2.871  (34.834%)
+    over 2.25: 3.074  (32.531%)
+
+Yarmouth | 659 metres | 712 races
+  2-WAY
+    1.75 or less: 1.935  (51.685%)
+    over 1.75: 2.070  (48.315%)
+  3-WAY
+    1 or less: 2.687  (37.219%)
+    over 1 up to and including 3: 3.043  (32.865%)
+    over 3: 3.343  (29.916%)

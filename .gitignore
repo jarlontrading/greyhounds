@@ -1,0 +1,22 @@
+**/bin/
+**/obj/
+.vs/
+.vscode/
+artifacts/
+*.user
+*.suo
+*.env
+!*.env.example
+*.pfx
+*.p12
+*.pem
+*.key
+*.db
+*.sqlite*
+*.log
+**/logs/
+**/profiles/
+**/browser-profile*/
+**/appsettings.*.json
+!**/appsettings.*.example.json
+*conflicted copy*

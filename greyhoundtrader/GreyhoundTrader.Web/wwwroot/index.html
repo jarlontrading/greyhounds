@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Greyhound Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=20260910-trap-challenge">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">RT</span>
+      <div>
+        <h1>Greyhound Trader</h1>
+        <p>Meeting and market operations</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span id="diskSpaceBadge" class="disk-space-badge" role="status" aria-live="polite">C: checking space…</span>
+      <label class="runner-sort-control" for="runnerSortMode" title="Price sorts shortest Race Winner price first">
+        <span>Global sort</span>
+        <select id="runnerSortMode" aria-label="Sort runners globally">
+          <option value="number">Race number</option>
+          <option value="price">Price</option>
+        </select>
+      </label>
+      <span id="betfredOffBadge" class="spreadex-ticker waiting" title="Greyhound Trader managed Betfred OFF browser"><i></i> Betfred OFF browser starting…</span>
+      <span id="suspensionSentinelBadge" class="spreadex-ticker waiting" title="Suspension sentinel heartbeat"><i></i> Suspensions starting…</span>
+      <span id="betfredPricingBadge" class="spreadex-ticker waiting" title="Greyhound Trader managed Betfred pricing worker"><i></i> Betfred prices starting…</span>
+      <span id="environmentBadge" class="environment-badge prod"><i></i> PROD LIVE</span>
+      <span id="connectionState" class="connection-state"><i></i> Connecting</span>
+      <button id="feedRefreshButton" class="feed-refresh-button" type="button"
+              title="Rebuild Spreadex and Bet365 subscriptions, then reprice subscribed races">Refresh feeds</button>
+      <a class="provider-compare-link" href="/provider-comparison.html" target="_blank" rel="noopener"
+         title="Open the four-provider runner price comparison">Compare feeds &#8599;</a>
+      <a class="provider-compare-link" href="/arb-monitor.html" target="_blank" rel="noopener"
+         title="Open the live RacingTrader versus Spreadex index arb monitor">Index arbs &#8599;</a>
+      <a class="provider-compare-link" href="/feed-diagnostics.html" target="_blank" rel="noopener"
+         title="Open live pricing-worker diagnostics">Feed diagnostics &#8599;</a>
+      <a class="provider-compare-link" href="/distance-review.html" target="_blank" rel="noopener">Distance results &#8599;</a>
+      <button id="refreshButton" class="icon-button" type="button" title="Refresh now" aria-label="Refresh now">↻</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="meetings-panel">
+      <div class="sport-switch" role="tablist" aria-label="Sport">
+        <button class="sport-tab active" data-sport="4" role="tab" aria-selected="true">
+          <span class="sport-icon">◇</span> Greyhounds
+        </button>
+      </div>
+      <nav class="competition-filter" aria-label="Meeting filter">
+        <button class="competition-filter-button active" type="button" data-meeting-filter="all">All meetings</button>
+        <button class="competition-filter-button" type="button" data-meeting-filter="subscribed">Subscribed only</button>
+        <a id="preEventFeedLink" class="pre-event-feed-link" href="/api/feed/pre-event?sportId=4&amp;page=1" target="_blank" rel="noopener noreferrer">Page 1 pre-event feed ↗</a>
+      </nav>
+      <div class="panel-heading">
+        <div>
+          <span class="eyebrow">Today + upcoming</span>
+          <h2>Meetings</h2>
+        </div>
+        <span id="meetingCount" class="count-badge">0</span>
+      </div>
+      <div id="meetingList" class="meeting-list" aria-live="polite"></div>
+    </aside>
+
+    <aside class="races-panel">
+      <div class="panel-heading races-heading">
+        <div>
+          <span class="eyebrow">Subscribed</span>
+          <h2>Races by time</h2>
+        </div>
+        <span id="raceColumnCount" class="count-badge">0</span>
+      </div>
+      <a class="race-audit-link" href="/api/race-audit" target="_blank" rel="noopener">Open today's lifecycle audit &#8599;</a>
+      <div id="spreadexMeetingHealth" class="spreadex-meeting-health" aria-label="Spreadex meeting subscription health"></div>
+      <div id="chronologicalRaceList" class="chronological-race-list" aria-live="polite"></div>
+    </aside>
+
+    <section class="workspace">
+      <div class="event-bar">
+        <div class="event-bar-title">
+          <span class="eyebrow">Subscribed events</span>
+          <h2 id="selectedMeeting">Select a meeting</h2>
+          <span id="unpricedRaceCount" class="unpriced-race-count hidden">0 unpriced</span>
+          <button id="bet365WalkButton" class="feed-refresh-button hidden" type="button"
+                  title="Open Bet365 and visit every race in this meeting, one second per page">Walk Bet365 meeting</button>
+        </div>
+        <div id="eventTabs" class="event-tabs"></div>
+      </div>
+
+      <section id="emptyState" class="empty-state">
+        <div class="empty-illustration">⌁</div>
+        <h3>Choose a subscribed meeting</h3>
+        <p>Subscribe from the meetings list, then select an event to see every runner and market price.</p>
+      </section>
+
+      <section id="board" class="board hidden">
+        <div class="board-heading">
+          <div>
+            <div class="board-title-line">
+              <span id="eventTime" class="time-chip">--:--</span>
+              <h2 id="eventName">Event</h2>
+              <a id="eventFeedLink" class="feed-link" href="#" target="_blank" rel="noopener noreferrer" title="Open the external BetsAPI response">BetsAPI ↗</a>
+              <button id="eventRepriceButton" class="feed-refresh-button" type="button"
+                      title="Fetch fresh provider prices and rebuild this race">Reprice race</button>
+            </div>
+            <p id="boardMeta" class="board-meta"></p>
+            <div id="eventStateBadges" class="state-badges"></div>
+          </div>
+          <section id="trapChallengePanel" class="trap-challenge hidden" aria-label="Meeting Trap Challenge"></section>
+          <div class="rule4-summary">
+            <span>Meeting Rule 4</span>
+            <strong id="totalRule4">0p / £</strong>
+          </div>
+        </div>
+
+        <section id="bettingWithoutControls" class="market-controls quick-market-control betting-without-controls">
+          <div id="bettingWithoutControlBody"></div>
+        </section>
+
+        <section id="matchBetControls" class="market-controls quick-market-control match-bet-controls">
+          <div id="matchBetControlBody"></div>
+        </section>
+
+        <section id="forecastControls" class="market-controls quick-market-control forecast-controls">
+          <div id="forecastControlBody"></div>
+        </section>
+
+        <div class="table-note">
+          <span><i class="price-dot live"></i> Live price</span>
+          <span><i class="price-dot withdrawn"></i> Withdrawn / replaced</span>
+          <span>Mini graph: Race Winner history</span>
+          <span id="betfairNote">Betfair delayed feed: checking</span>
+          <a class="racecard-spread-jump" href="#raceCardSpreads">Racecard spreads ↓</a>
+          <span class="scroll-hint">Insure Bet markets →</span>
+        </div>
+        <div class="price-table-wrap">
+          <table id="priceTable" class="price-table">
+            <thead id="priceHead"></thead>
+            <tbody id="priceBody"></tbody>
+          </table>
+        </div>
+        <section id="raceCardSpreads" class="racecard-spreads"></section>
+        <section id="derivedMarkets" class="derived-markets hidden">
+          <div class="derived-heading">
+            <div>
+              <span class="eyebrow">Display order</span>
+              <h3>Additional markets</h3>
+            </div>
+          </div>
+          <div id="derivedMarketGrid" class="derived-market-grid"></div>
+        </section>
+
+        <section id="marketControls" class="market-controls event-config-bottom">
+          <div class="market-controls-heading">
+            <div>
+              <span class="eyebrow">Event configuration</span>
+              <h3>Additional markets</h3>
+            </div>
+            <span class="environment-badge prod"><i></i> PROD PUBLISHING</span>
+          </div>
+          <div id="marketControlBody"></div>
+        </section>
+      </section>
+    </section>
+
+    <aside class="activity-panel" aria-label="Live updates">
+      <div class="activity-heading">
+        <div>
+          <span class="eyebrow">Live audit</span>
+          <h2>Monitors</h2>
+        </div>
+      </div>
+      <section class="rule4-monitor" aria-label="Latest Rule 4 calculations">
+        <div class="rule4-monitor-heading"><strong>Rule 4 monitor</strong><span>all recent</span></div>
+        <div id="rule4MonitorList" class="rule4-monitor-list"><p>No Rule 4 calculations yet.</p></div>
+      </section>
+      <section id="suspensionMonitor" class="suspension-monitor" aria-label="Race suspension countdown">
+        <div class="rule4-monitor-heading"><strong>Suspension monitor</strong><span>last + next 5</span></div>
+        <div id="suspensionMonitorList" class="suspension-monitor-list"><p>Loading suspension schedule…</p></div>
+      </section>
+      <section class="feed-update-monitor" aria-label="Latest feed price updates">
+        <div class="rule4-monitor-heading"><strong>Last price updates</strong><span>live feeds</span></div>
+        <div id="feedUpdateMonitorList" class="feed-update-monitor-list">
+        <p class="activity-empty">Waiting for activity…</p>
+        </div>
+      </section>
+      <section class="missing-feed-monitor" aria-label="Events missing from BetsAPI">
+        <div class="rule4-monitor-heading"><strong>Not in BetsAPI</strong><span id="missingBetsApiCount">checking</span></div>
+        <div id="missingBetsApiMonitorList" class="missing-feed-monitor-list">
+          <p class="activity-empty">Checking current eventsâ€¦</p>
+        </div>
+      </section>
+      <section class="provider-link-monitor" aria-label="Unmatched provider events">
+        <div class="rule4-monitor-heading"><strong>Provider links</strong><span id="providerLinkIssueCount">checking</span></div>
+        <div id="providerLinkMonitorList" class="provider-link-monitor-list">
+          <p class="activity-empty">Checking Bet365 / Spreadex links…</p>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <dialog id="actionDialog" class="action-dialog">
+    <form id="actionForm" method="dialog">
+      <button id="closeDialog" class="dialog-close" type="button" aria-label="Close">×</button>
+      <span id="dialogEyebrow" class="eyebrow">Runner action</span>
+      <h2 id="dialogTitle">Confirm action</h2>
+      <p id="dialogDescription"></p>
+      <div id="replacementFields" class="replacement-fields hidden">
+        <label>
+          Replacement dog
+          <input id="replacementName" name="replacementName" maxlength="200" autocomplete="off">
+        </label>
+        <label>
+          Opening decimal price <span>(optional)</span>
+          <input id="replacementPrice" name="replacementPrice" type="number" min="1.01" step="0.01" placeholder="e.g. 4.50">
+        </label>
+      </div>
+      <label id="reasonField">
+        Reason <span>(optional)</span>
+        <input id="withdrawalReason" name="withdrawalReason" maxlength="240" placeholder="Feed withdrawal, veterinary advice…">
+      </label>
+      <div class="dialog-actions">
+        <button id="cancelDialog" type="button" class="button secondary">Cancel</button>
+        <button id="confirmAction" type="submit" class="button danger">Withdraw &amp; apply Rule 4</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js?v=20261116-betahoy-race"></script>
+</body>
+</html>

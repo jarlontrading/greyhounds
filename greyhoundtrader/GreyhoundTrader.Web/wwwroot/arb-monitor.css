@@ -1,0 +1,50 @@
+@import url('/provider-comparison.css?v=20260730-1');
+
+.arb-value strong {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .88rem;
+}
+
+.arb-value.positive strong { color: #52e2ad; }
+.arb-value.negative strong { color: #ff7272; }
+
+body { font-size: 12px; }
+th, td { padding: .48rem .58rem; font-size: .74rem; }
+.comparison-header h1 { font-size: 1.45rem; }
+.comparison-header p { font-size: .78rem; }
+.summary article strong { font-size: 1.05rem; }
+
+.quote {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.market-tag {
+  display: block;
+  color: #8ca6b8;
+  font-size: .72rem;
+  margin-top: .25rem;
+}
+
+.race-button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #dce8ef;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+}
+
+.race-button:hover { color: #52e2ad; text-decoration: underline; }
+
+.runner-with-silk { display: flex; align-items: center; gap: .45rem; }
+.arb-silk { width: 25px; height: 25px; object-fit: contain; flex: 0 0 25px; }
+.update-time { font-family: 'JetBrains Mono', monospace; white-space: nowrap; color: #9fb2bf; }
+
+tbody tr:first-child {
+  background: rgba(82, 226, 173, .07);
+}

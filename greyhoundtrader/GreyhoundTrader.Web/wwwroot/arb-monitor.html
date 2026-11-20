@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Index Arb Monitor - Racing Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/arb-monitor.css?v=20260731-2">
+</head>
+<body>
+  <header class="comparison-header">
+    <div>
+      <span class="eyebrow">Racing Trader diagnostics</span>
+      <h1>Index arb monitor</h1>
+      <p>Positive executable crosses between RacingTrader and Spreadex, ranked by points.</p>
+    </div>
+    <div class="connection-block">
+      <span id="liveState" class="live-state waiting"><i></i> Connecting</span>
+      <strong id="clock">--:--:--</strong>
+    </div>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Arb controls">
+      <label><span>Meeting</span><select id="meetingFilter"><option value="">All meetings</option></select></label>
+      <button id="refreshButton" type="button">Refresh now</button>
+    </section>
+
+    <section class="summary" aria-label="Arb summary">
+      <article><span>Live arbs</span><strong id="arbCount">0</strong></article>
+      <article><span>Races affected</span><strong id="raceCount">0</strong></article>
+      <article><span>Largest absolute arb</span><strong id="largestArb">0.00 pts</strong></article>
+      <article><span>Last Spreadex update</span><strong id="latestUpdate">--:--:--</strong></article>
+    </section>
+
+    <section class="table-shell">
+      <table>
+        <thead><tr><th>Race</th><th>No.</th><th>Selection</th><th>RT price</th><th>Spreadex price</th><th>SDX update</th><th>Arb value<br><small>SDX over RT</small></th></tr></thead>
+        <tbody id="arbRows"><tr><td colspan="7" class="empty">Waiting for index prices...</td></tr></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="/arb-monitor.js?v=20260731-2"></script>
+</body>
+</html>

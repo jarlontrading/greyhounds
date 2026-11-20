@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Racing feed diagnostics</title>
+  <link rel="stylesheet" href="/feed-diagnostics.css">
+</head>
+<body>
+  <header>
+    <div><h1>Feed diagnostics</h1><p>Live pricing-worker pipeline</p></div>
+    <div class="actions">
+      <button id="globalRefresh">Refresh all feeds</button>
+      <a href="/">Trader</a>
+    </div>
+  </header>
+  <main>
+    <section class="status-grid" id="statusGrid"></section>
+    <section class="panel">
+      <h2>Recent race work</h2>
+      <table><thead><tr><th>Time</th><th>Race</th><th>Event</th><th>Outcome</th><th>Error</th><th></th></tr></thead>
+      <tbody id="recentBody"></tbody></table>
+    </section>
+  </main>
+  <div id="message"></div>
+  <script src="/feed-diagnostics.js"></script>
+</body>
+</html>

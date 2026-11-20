@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>GreyhoundTrader.Web</AssemblyName>
+    <RootNamespace>RacingTrader.Web</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Program (DESKTOP-OL4G1OF's conflicted copy 2026-07-21).cs" />
+    <Compile Remove="**\*conflicted copy*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="GreyhoundTrader.DistanceTests" />
+    <Content Include="Data/fixed-margin-markets-min50.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <PackageReference Include="AngleSharp" Version="1.5.2" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.414.2" />
+    <PackageReference Include="Microsoft.Playwright" Version="1.60.0" />
+    <PackageReference Include="MySqlConnector" Version="2.6.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.2.1" />
+  </ItemGroup>
+</Project>

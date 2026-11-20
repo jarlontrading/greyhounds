@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Greyhound line-market guide</title><link rel="stylesheet" href="styles.css">
+<style>
+body{padding:22px;background:#071116;color:#eaf4f7}.guide{max-width:1200px;margin:auto}.guide-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}.guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.guide-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden}.guide-card h2,.guide-card p{margin:0;padding:12px 15px}.guide-card p{padding-top:0;color:var(--muted)}table{width:100%;border-collapse:collapse}th,td{padding:7px 11px;border-top:1px solid var(--line-soft);text-align:right;font:10px "JetBrains Mono",monospace}th:first-child,td:first-child{text-align:left}.pick{background:rgba(82,226,173,.12);color:var(--green);font-weight:800}@media(max-width:800px){.guide-grid{grid-template-columns:1fr}}
+</style></head><body><main class="guide"><div class="guide-head"><div><span class="eyebrow">Six equal dogs at 6.00</span><h1>Line-market pricing guide</h1></div><a href="/">Back to trader</a></div><div id="guide" class="guide-grid">Loading…</div></main>
+<script>
+const pct=v=>`${(v*100).toFixed(1)}%`;const odds=v=>Number(v).toFixed(2);
+fetch('/api/greyhound-line-market-guide').then(r=>r.json()).then(markets=>{
+ document.querySelector('#guide').innerHTML=markets.map(m=>`<section class="guide-card"><h2>${m.name}</h2><p>${m.formula} · pick'em ${m.pickEmLine.toFixed(1)}</p><table><thead><tr><th>Line</th><th>Under %</th><th>Under</th><th>Over</th><th>Over %</th></tr></thead><tbody>${m.lines.map(x=>`<tr class="${x.pickEm?'pick':''}"><td>${x.line.toFixed(1)}</td><td>${pct(x.underProbability)}</td><td>${odds(x.underPrice)}</td><td>${odds(x.overPrice)}</td><td>${pct(x.overProbability)}</td></tr>`).join('')}</tbody></table></section>`).join('');
+}).catch(e=>document.querySelector('#guide').textContent=e.message);
+</script></body></html>

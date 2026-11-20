@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup><ProjectReference Include="../GreyhoundTrader.Web/GreyhoundTrader.Web.csproj" /></ItemGroup>
+  <ItemGroup><None Include="../GreyhoundTrader.Web/Data/fixed-margin-markets-min50.txt" Link="Data/fixed-margin-markets-min50.txt" CopyToOutputDirectory="PreserveNewest" /></ItemGroup>
+</Project>
