@@ -31,6 +31,14 @@ The six direct SQL components in EACH web app are RacingRepository, RacingFeedRe
 
 `scripts/Export-OceanMigration.ps1 -Trader racing|greyhounds -OutputDirectory <new external path>` exports schema and inventory by default, with SHA256 manifest. Credentials are read from the existing private settings file and passed through the dump child process environment, never command-line arguments or repository files. `-IncludeData` creates a one-time recovery/export snapshot; this is NOT a retention archive and is not a final cutover snapshot while writes continue. Nontransactional tables require separate handling or a write freeze. Never import an unreviewed MariaDB dump directly into the live cloud schema.
 
-## Access prerequisite
+## Access verified, 20 November 2026
 
-This Windows account has no doctl configuration, no `SPORTUNO_ADMIN_API_KEY`, no documented admin DPAPI connection file and no configured Coupons writer registry key. Existing server source is available, but the handovers do not grant deployment credentials. Deployment access was requested from the user through the existing secure setup. Do not ask for passwords in chat. No cloud readiness, capacity, least-privilege grants or import compatibility has yet been verified.
+Located the configured client key in `D:/Dropbox/SingleSdxTrader/docs/OCEAN-API.txt` and the private portable credential handover. Credential values are not copied into this repository or migration report. Authenticated Ocean health succeeds: database `sportuno`, event publisher target `UAT / DEMOevents`. This publisher target does not cause shared-state writes to send trading messages.
+
+Verified GET -> PUT -> GET round trips and rejection of stale revisions (409), using separate app-owned keys `racing-prod-migration-probe-v1` and `greyhounds-prod-migration-probe-v1`. Only these small probe documents were written; no cards, results, prices or trading events were migrated or published.
+
+Saved separate CurrentUser-DPAPI connection documents under `%LOCALAPPDATA%/Sportuno/RacingTrader/ocean-connection.json` and `%LOCALAPPDATA%/Sportuno/GreyhoundTrader/ocean-connection.json`, each marked `PreflightOnly`. They are not portable to another user/machine. The existing applications do not yet load these files, so this does not switch storage.
+
+Run `pwsh ./scripts/Test-OceanConnection.ps1 -Trader racing|greyhounds -TestWrite` to repeat authenticated health, document round-trip and stale-revision checks. The test compares JSON values rather than textual formatting because MySQL can normalize stored JSON.
+
+The discovered credential authorizes the existing client API, not DigitalOcean infrastructure/deployment. No DigitalOcean deployment token or database administrator connection was found in these files. Full cutover still requires the cloud storage API and trader adapters described above, plus target capacity/grants/import validation. The client key alone does not authorize deploying/extending an App Platform service or provisioning isolated database schemas. Do not represent these probes as a completed migration or retire local MariaDB.
