@@ -1,4 +1,14 @@
-# Ocean migration: preflight, 20 November 2026
+# Ocean persistence update, 23 November 2026
+
+The later instruction is to retain local MariaDB for all real-time trading and use Ocean only for asynchronous persistent storage. It supersedes the full remote SQL cutover proposal below. Neither trader depends on Ocean for pricing, OFF, results or publishing.
+
+The shared storage API and Windows background worker live in [jarlontrading/racing](https://github.com/jarlontrading/racing/tree/migration/ocean-storage). See its `docs/OCEAN-MIGRATION.md` and `PersistenceSync/README.md` for the current deployment, data scope and recovery contract. One worker copies both databases using separate SELECT-only source users, namespace-specific keys, durable disk queues and revision-checked uploads. There is no additional greyhound trading publisher.
+
+The new app is https://racing-greyhounds-storage-gr2xj.ondigitalocean.app, with separate `racing_uat`, `greyhounds_uat`, `racing_prod`, and `greyhounds_prod` schemas on the existing cluster. Confirmed extra app cost is US$5/month, excluding taxes and bandwidth overage. No cluster resize was performed.
+
+Private worker configuration is `D:/CodexData/ocean-migration/sync/config.json`; loopback status is `http://127.0.0.1:5489/status`. Cards/results/configuration and current prices are copied; raw tick history and logs are not. Existing local 30-day history retention remains. No local data is deleted, and local MariaDB is still required. Cloud copying is not a completed SQL restore facility or permission to remove the local database.
+
+## Historical preflight (20 November 2026)
 
 Status: PREPARATION ONLY. Neither trader is switched. No cloud database was created, no production settings changed, and no additional Sportuno publisher started.
 
