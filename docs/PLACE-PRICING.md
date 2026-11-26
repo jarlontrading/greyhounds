@@ -1,6 +1,6 @@
-# Place pricing — implementation awaiting approval
+# Place pricing — approved release
 
-Status: implemented in both source checkouts; **not released or enabled**. Both sports default to `Legacy`. No production files, settings, databases or publishing processes were changed.
+Status: release authorised for both racing and greyhounds on 26 November 2026. Each application selects `DiscountedHarville` for its relevant sport. The code-level fallback remains `Legacy`. Deployment and runtime verification are recorded separately.
 
 ## Calculation
 
@@ -16,7 +16,7 @@ Sources and evidence: [Benter's report](https://gwern.net/doc/statistics/decisio
 
 Top 2/3/4 and the place probabilities used by Insure Bet 2/3/4 use the selected place model. Existing market eligibility, greyhound exclusion of fourth-place products, IDs, selection identity, flags, final odds rounding and SP-only suspension behaviour remain intact. Winner, forecast, betting-without, match-bet, index, distance and meeting-market calculation rules remain unchanged.
 
-The old fitted curve remains selectable for rollback and comparison. There is no live toggle endpoint. A future approved release would explicitly select `DiscountedHarville` in the relevant application's standard configuration. Until then, leave both model values as `Legacy`.
+The old fitted curve remains selectable for rollback and comparison. There is no live toggle endpoint. The approved release selects `DiscountedHarville` for the relevant sport in each application. Set that sport to `Legacy` to revert the model. The example below shows rollback settings.
 
 ```json
 {
@@ -39,10 +39,10 @@ The old fitted curve remains selectable for rollback and comparison. There is no
 }
 ```
 
-Unknown model names and non-finite/out-of-range exponents fail validation at startup. The standard `/api/status` response will expose the chosen place settings when an approved build is eventually deployed.
+Unknown model names and non-finite/out-of-range exponents fail validation at startup. The standard `/api/status` response will expose the chosen place settings after the approved build is deployed.
 
 ## Offline checks
 
 Run `dotnet run --project PlacePricingTests/PlacePricingTests.csproj -c Release` in either repository. These tests open no provider, database or broker connections. Golden probability fixtures were generated independently using a subset-state dynamic programme, rather than the production finishing-order traversal. Checks cover conservation, monotonic cumulative probabilities, scratch exclusion, unit-exponent equivalence with ordinary Harville, symmetry, permutation/scale invariance, extreme favourites, separate sport settings, unchanged legacy defaults, market identities and eligibility, and existing non-place pricing.
 
-The tests also report local timing for all Top 1–4 probability books in 6/12/24-runner fields. Initial warm-JIT measurements were approximately 0.03 / 0.4 / 6 ms per race. These are local observations, not a production throughput guarantee. Existing horse result/Rule 4 and greyhound distance suites are also required. Future release packaging runs the new checks automatically; no packaging, push or deployment was performed for this change.
+The tests also report local timing for all Top 1–4 probability books in 6/12/24-runner fields. Initial warm-JIT measurements were approximately 0.03 / 0.4 / 6 ms per race. These are local observations, not a production throughput guarantee. Existing horse result/Rule 4 and greyhound distance suites are also required. Future release packaging runs the new checks automatically; release actions require explicit user authorisation, subsequently given for both applications.
