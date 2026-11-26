@@ -8,6 +8,7 @@ try {
     $out=Join-Path $root "artifacts/$Version"
     if(Test-Path $out){throw "Release directory already exists: $out. Use a new version."}
     Run @('run','--project','greyhoundtrader/GreyhoundTrader.DistanceTests/GreyhoundTrader.DistanceTests.csproj','-c','Release')
+    Run @('run','--project','PlacePricingTests/PlacePricingTests.csproj','-c','Release')
     $projects=[ordered]@{
         greyhounds='greyhoundtrader/GreyhoundTrader.Web/GreyhoundTrader.Web.csproj'
     }

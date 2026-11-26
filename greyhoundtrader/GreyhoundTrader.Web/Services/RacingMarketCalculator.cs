@@ -1,7 +1,9 @@
 namespace RacingTrader.Web.Services;
 
-internal sealed class RacingMarketCalculator(GreyhoundDistanceMarkets? distances = null)
+internal sealed class RacingMarketCalculator(GreyhoundDistanceMarkets? distances = null, PlacePricingOptions? placePricing = null)
 {
+    private readonly PlacePricingOptions placeOptions = (placePricing ?? new PlacePricingOptions()).Validate();
+
     private const double TargetBook = 1.0;
     private const double MinimumWinnerBook = .99;
     private const double BookTolerance = .0000005;
@@ -47,18 +49,19 @@ internal sealed class RacingMarketCalculator(GreyhoundDistanceMarkets? distances
         if (runners.Count == 0) return [];
         var raceWinner = BuildRaceWinner(racingEvent, runners);
         var normalizedRunners = WithRaceWinnerPrices(runners, raceWinner.Selections);
+        var placeBooks = new Lazy<double[][]>(() => PlaceProbabilityBooks(racingEvent.SportId, normalizedRunners));
         var eligibleRunners = EligibleRunnerCount(runners);
         var markets = new List<GeneratedMarket>
         {
             RequireRunners(raceWinner, eligibleRunners, 2),
-            RequireRunners(BuildPlace(racingEvent, normalizedRunners, 2, Top2Suffix, "Top 2", 1002, 20), eligibleRunners, 4)
+            RequireRunners(BuildPlace(racingEvent, normalizedRunners, 2, Top2Suffix, "Top 2", 1002, 20, placeBooks.Value[2]), eligibleRunners, 4)
         };
         markets.Add(config.Top3Enabled
-            ? RequireRunners(BuildPlace(racingEvent, normalizedRunners, 3, Top3Suffix, "Top 3", 1003, 30), eligibleRunners, 5)
+            ? RequireRunners(BuildPlace(racingEvent, normalizedRunners, 3, Top3Suffix, "Top 3", 1003, 30, placeBooks.Value[3]), eligibleRunners, 5)
             : Disabled(racingEvent.EventId, Top3Suffix, "Top 3", 1003, 30));
         var fourthPlaceMarketsEnabled = config.Insure4Enabled && racingEvent.SportId != 4;
         markets.Add(fourthPlaceMarketsEnabled
-            ? RequireRunners(BuildPlace(racingEvent, normalizedRunners, 4, Top4Suffix, "Top 4", 1008, 35), eligibleRunners, 6)
+            ? RequireRunners(BuildPlace(racingEvent, normalizedRunners, 4, Top4Suffix, "Top 4", 1008, 35, placeBooks.Value[4]), eligibleRunners, 6)
             : Disabled(racingEvent.EventId, Top4Suffix, "Top 4", 1008, 35));
         // Index markets are a horse-racing product derived from the normalized
         // 100% Race Winner book. They are not enabled for greyhounds yet.
@@ -71,9 +74,9 @@ internal sealed class RacingMarketCalculator(GreyhoundDistanceMarkets? distances
 
         foreach (var without in config.BettingWithoutMarkets)
             markets.Add(RequireRunners(BuildBettingWithout(racingEvent, normalizedRunners, without), eligibleRunners, 4));
-        markets.Add(config.Insure2Enabled ? RequireRunners(BuildInsure(racingEvent, normalizedRunners, 2, Insure2Suffix, "Insure Bet 2 Places", 1005, 160), eligibleRunners, 4) : Disabled(racingEvent.EventId, Insure2Suffix, "Insure Bet 2 Places", 1005, 160));
-        markets.Add(config.Insure3Enabled ? RequireRunners(BuildInsure(racingEvent, normalizedRunners, 3, Insure3Suffix, "Insure Bet 3 Places", 1006, 170), eligibleRunners, 5) : Disabled(racingEvent.EventId, Insure3Suffix, "Insure Bet 3 Places", 1006, 170));
-        markets.Add(fourthPlaceMarketsEnabled ? RequireRunners(BuildInsure(racingEvent, normalizedRunners, 4, Insure4Suffix, "Insure Bet 4 Places", 1009, 180), eligibleRunners, 6) : Disabled(racingEvent.EventId, Insure4Suffix, "Insure Bet 4 Places", 1009, 180));
+        markets.Add(config.Insure2Enabled ? RequireRunners(BuildInsure(racingEvent, normalizedRunners, 2, Insure2Suffix, "Insure Bet 2 Places", 1005, 160, placeBooks.Value[2]), eligibleRunners, 4) : Disabled(racingEvent.EventId, Insure2Suffix, "Insure Bet 2 Places", 1005, 160));
+        markets.Add(config.Insure3Enabled ? RequireRunners(BuildInsure(racingEvent, normalizedRunners, 3, Insure3Suffix, "Insure Bet 3 Places", 1006, 170, placeBooks.Value[3]), eligibleRunners, 5) : Disabled(racingEvent.EventId, Insure3Suffix, "Insure Bet 3 Places", 1006, 170));
+        markets.Add(fourthPlaceMarketsEnabled ? RequireRunners(BuildInsure(racingEvent, normalizedRunners, 4, Insure4Suffix, "Insure Bet 4 Places", 1009, 180, placeBooks.Value[4]), eligibleRunners, 6) : Disabled(racingEvent.EventId, Insure4Suffix, "Insure Bet 4 Places", 1009, 180));
 
         foreach (var pair in config.MatchBets)
             markets.Add(RequireRunners(BuildMatchBet(racingEvent, normalizedRunners, pair), eligibleRunners, 4));
@@ -388,9 +391,9 @@ internal sealed class RacingMarketCalculator(GreyhoundDistanceMarkets? distances
         WalkMarketToTargetBook(selections, targetBook, minimumBook);
     }
 
-    private static GeneratedMarket BuildPlace(PricingEvent ev, IReadOnlyList<PricingRunner> runners, int places, int suffix, string name, int type, int order)
+    private static GeneratedMarket BuildPlace(PricingEvent ev, IReadOnlyList<PricingRunner> runners, int places, int suffix, string name, int type, int order, double[] placeProbabilities)
     {
-        var probabilities = PlaceProbabilities(runners, places);
+        var probabilities = placeProbabilities;
         var marketId = MakeMarketId(ev.EventId, suffix);
         var selections = runners.Select((runner, index) =>
         {
@@ -493,10 +496,10 @@ internal sealed class RacingMarketCalculator(GreyhoundDistanceMarkets? distances
         return reduced ? spreadexPoints : standard;
     }
 
-    private static GeneratedMarket BuildInsure(PricingEvent ev, IReadOnlyList<PricingRunner> runners, int places, int suffix, string name, int type, int order)
+    private static GeneratedMarket BuildInsure(PricingEvent ev, IReadOnlyList<PricingRunner> runners, int places, int suffix, string name, int type, int order, double[] placeProbabilities)
     {
         var wins = WinProbabilities(runners);
-        var placed = PlaceProbabilities(runners, places);
+        var placed = placeProbabilities;
         var marketId = MakeMarketId(ev.EventId, suffix);
         var selections = runners.Select((runner, index) =>
         {
@@ -688,6 +691,19 @@ internal sealed class RacingMarketCalculator(GreyhoundDistanceMarkets? distances
         var total = result.Sum();
         if (total > 0) for (var i = 0; i < result.Length; i++) result[i] /= total;
         return result;
+    }
+
+    internal double[][] PlaceProbabilityBooks(int sportId, IReadOnlyList<PricingRunner> runners)
+    {
+        var parameters = placeOptions.ForSport(sportId);
+        if (!parameters.UsesDiscountedHarville)
+            return [[], [], PlaceProbabilities(runners, 2), PlaceProbabilities(runners, 3), PlaceProbabilities(runners, 4)];
+        var wins = WinProbabilities(runners);
+        // Remove non-runners exactly: the legacy win transform uses a tiny
+        // placeholder weight which must not be amplified by fractional powers.
+        for (var i = 0; i < wins.Length; i++)
+            if (runners[i].Scratch || runners[i].Price <= 1) wins[i] = 0;
+        return DiscountedHarville.Calculate(wins, parameters);
     }
 
     private static double[] PlaceProbabilities(IReadOnlyList<PricingRunner> runners, int places)

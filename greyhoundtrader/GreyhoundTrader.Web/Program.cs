@@ -29,7 +29,9 @@ builder.Services.AddSingleton<ExternalSettings>();
 builder.Services.AddSingleton<RacingRepository>();
 // The distance state is loaded by its own worker. Do not make construction of
 // every race-pricing repository wait for that file-backed service.
-builder.Services.AddSingleton(_ => new RacingMarketCalculator());
+var placePricing = (builder.Configuration.GetSection("RacingTrader:PlacePricing").Get<PlacePricingOptions>() ?? new PlacePricingOptions()).Validate();
+builder.Services.AddSingleton(placePricing);
+builder.Services.AddSingleton(_ => new RacingMarketCalculator(placePricing: placePricing));
 builder.Services.AddSingleton<GreyhoundDistanceMarkets>();
 builder.Services.AddSingleton<TrapChallengeService>();
 builder.Services.AddSingleton<TrapChallengePublishingWorker>();
@@ -223,6 +225,7 @@ app.MapGet("/api/status", (ExternalSettings settings) => Results.Ok(new
     service = "Greyhound Trader Web",
     environment = string.Join(" + ", publishTargets.Select(x => x == "DEMO" ? "UAT" : x)),
     productionPublishing = publishTargets.Contains("PROD"),
+    placePricing = new { horses = placePricing.Horses, greyhounds = placePricing.Greyhounds },
     uatPublishing = publishTargets.Contains("DEMO"),
     marketVisibility = new
     {
