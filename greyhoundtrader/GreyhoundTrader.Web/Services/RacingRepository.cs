@@ -1155,7 +1155,7 @@ public sealed class RacingRepository
 
     internal async Task<IReadOnlyList<TrapChallengeRaceInput>> GetMeetingTrapChallengeRacesAsync(
         string meeting,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken, long? anchorStartTimeUnix=null)
     {
         const string sql = """
             SELECT e.betsapi_event_id,e.starts_at_unix,
@@ -1173,8 +1173,8 @@ public sealed class RacingRepository
               ON rr.event_id=s.event_id AND rr.selection_id=s.selection_id
             WHERE e.sport_id=4
               AND COALESCE(NULLIF(e.league_name,''),'Unassigned')=@meeting
-              AND e.starts_at_unix>=UNIX_TIMESTAMP(UTC_TIMESTAMP()-INTERVAL 18 HOUR)
-              AND e.starts_at_unix<=UNIX_TIMESTAMP(UTC_TIMESTAMP()+INTERVAL 48 HOUR)
+              AND e.starts_at_unix>=@from
+              AND e.starts_at_unix<@to
             ORDER BY e.starts_at_unix,CAST(NULLIF(s.identifier,'') AS UNSIGNED),s.selection_id;
             """;
         var builders = new Dictionary<long, TrapChallengeRaceBuilder>();
@@ -1182,6 +1182,9 @@ public sealed class RacingRepository
         await connection.OpenAsync(cancellationToken);
         await using var command = new MySqlCommand(sql, connection);
         command.Parameters.AddWithValue("@meeting", meeting);
+        var date=anchorStartTimeUnix is {} anchor?DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeSeconds(anchor),MeetingCancellationPolicy.Zone).DateTime):(DateOnly?)null;
+        var bounds=date is {} day?MeetingCancellationPolicy.Bounds(day):(DateTimeOffset.UtcNow.AddHours(-18).ToUnixTimeSeconds(),DateTimeOffset.UtcNow.AddHours(48).ToUnixTimeSeconds());
+        command.Parameters.AddWithValue("@from",bounds.Item1);command.Parameters.AddWithValue("@to",bounds.Item2);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {

@@ -32,6 +32,7 @@ builder.Services.AddSingleton<RacingRepository>();
 builder.Services.AddSingleton(_ => new RacingMarketCalculator());
 builder.Services.AddSingleton<GreyhoundDistanceMarkets>();
 builder.Services.AddSingleton<TrapChallengeService>();
+builder.Services.AddSingleton<TrapChallengePublishingWorker>();
 builder.Services.AddHttpClient("TimeformGreyhounds", client =>
 {
     client.Timeout = TimeSpan.FromSeconds(90);
@@ -123,7 +124,6 @@ if (hostedWorkersEnabled)
     // query into a historical backfill here: hundreds of serial Sporting Life requests
     // previously starved suspension and status traffic.
     builder.Services.AddSingleton<GreyhoundDistanceWorker>();
-    builder.Services.AddSingleton<TrapChallengePublishingWorker>();
     builder.Services.AddSingleton<WithdrawalDetectionService>();
     // Resolve every worker after the host can bind. Constructing the direct OFF
     // worker graph has previously left a live dotnet process with no listener.
@@ -190,11 +190,14 @@ catch (Exception ex)
 // accepts monitor and browser requests. Those requests resolve the same
 // singletons; racing them against concurrent hosted-service construction has
 // caused DI lock cycles with a live web process but no suspension heartbeat.
+if(hostedWorkersEnabled)
+{
 _ = app.Services.GetRequiredService<RacingMarketCalculator>();
 _ = app.Services.GetRequiredService<RacingFeedRepository>();
 _ = app.Services.GetRequiredService<BetfredRacingService>();
 _ = app.Services.GetRequiredService<Bet365CaptureBridge>();
 _ = app.Services.GetRequiredService<RacingSuspensionWorker>();
+}
 
 app.MapGet("/api/disk-space", () =>
 {
@@ -382,8 +385,8 @@ app.MapPost("/api/admin/events/{eventId:long}/rule4/repair-zero", async (
     Results.Ok(await repo.RepairZeroRule4DeductionsForEventAsync(eventId, ct)));
 app.MapGet("/api/suspension-monitor", async (RacingActivityLog activity, CancellationToken ct) =>
     Results.Ok(await activity.GetSuspensionMonitorAsync(ct)));
-app.MapGet("/api/suspension-sentinel/status", (RacingSuspensionWorker sentinel) =>
-    Results.Ok(sentinel.Status));
+app.MapGet("/api/suspension-sentinel/status", (IServiceProvider services) =>
+    Results.Ok((object?)services.GetService<RacingSuspensionWorker>()?.Status??new{enabled=false}));
 app.MapGet("/api/feed-last-updates", async (RacingActivityLog activity, CancellationToken ct) =>
     Results.Ok(await activity.GetFeedLastUpdatesAsync(ct)));
 app.MapGet("/api/feed-diagnostics", (RacingFeedDiagnostics diagnostics) =>

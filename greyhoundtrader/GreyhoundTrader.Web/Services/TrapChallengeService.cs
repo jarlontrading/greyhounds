@@ -2,7 +2,7 @@ using RacingTrader.Web.Models;
 
 namespace RacingTrader.Web.Services;
 
-public sealed class TrapChallengeService(
+public sealed partial class TrapChallengeService(
     RacingRepository repository,
     TimeformGreyhoundForecastService timeform)
 {
@@ -309,7 +309,7 @@ public sealed class TrapChallengeService(
             return snapped > fair ? RacingMarketCalculator.MoveOneLadderShorter(snapped) : snapped;
         }).ToArray();
 
-    private static string DisplayMeetingName(string meeting, bool isEveningSession)
+    internal static string DisplayMeetingName(string meeting, bool isEveningSession)
     {
         var trimmed = meeting.Trim();
         foreach (var suffix in new[] { " EVE", " AM", " PM" })
