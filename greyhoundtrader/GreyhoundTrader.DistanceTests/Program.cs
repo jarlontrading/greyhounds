@@ -7,10 +7,13 @@ var assertions = 0;
 void Check(bool condition, string message) { assertions++; if (!condition) throw new Exception(message); }
 foreach (var active in new[] {0,1})
 {
-    var challengeEvent = new Dictionary<string,object?> { ["messageType"]="event", ["sportId"]=4, ["eventName"]="Monmore Trap Challenge", ["active"]=active };
+    foreach(var eventName in new[]{"Monmore Meeting","Harlow Evening Meeting","Monmore Trap Challenge"})
+    {
+    var challengeEvent = new Dictionary<string,object?> { ["messageType"]="event", ["sportId"]=4, ["eventName"]=eventName, ["active"]=active };
     RacingPublisher.AddTrapChallengeSinglesOnly(challengeEvent);
     Check(JsonSerializer.SerializeToElement(challengeEvent).GetProperty("singlesOnly").ValueKind==JsonValueKind.True,
         "Open and terminal trap-challenge events carry a boolean singlesOnly restriction");
+    }
     var singlesChallengeMarket = new Dictionary<string,object?> { ["messageType"]="market", ["marketTypeId"]=2002, ["active"]=active };
     RacingPublisher.AddTrapChallengeSinglesOnly(singlesChallengeMarket);
     Check(singlesChallengeMarket.GetValueOrDefault("singlesOnly") is true,"Trap-challenge markets carry singlesOnly in every state");
@@ -75,14 +78,14 @@ Check(resultedTrapChallenge.Selections.Single(x => x.Trap == 3).Winners == 1 &&
 var challengeSnapshot = TrapChallengeService.BuildPublishingSnapshot(
     "Monmore EVE", [uniformTrapRace, uniformTrapRace with { EventId = 2, StartTimeUnix = 1_800_000_600 }])!;
 Check(challengeSnapshot.Event.EventId == TrapChallengeService.EventNamespace + uniformTrapRace.EventId &&
-      challengeSnapshot.Event.Name == "Monmore Trap Challenge" &&
+      challengeSnapshot.Event.Name == "Monmore Meeting" &&
       challengeSnapshot.Event.StartTimeUnix == uniformTrapRace.StartTimeUnix,
     "Trap Challenge Sportuno event has a stable unique ID, clean name and first-race start time");
 var eveningChallengeSnapshot = TrapChallengeService.BuildPublishingSnapshot(
     "Harlow EVE", [uniformTrapRace, uniformTrapRace with { EventId = 2, StartTimeUnix = 1_800_000_600 }],
     isEveningSession: true)!;
 Check(eveningChallengeSnapshot.Event.Meeting == "Harlow Evening" &&
-      eveningChallengeSnapshot.Event.Name == "Harlow Evening Trap Challenge",
+      eveningChallengeSnapshot.Event.Name == "Harlow Evening Meeting",
     "A second same-track meeting is identified as Evening in Sportuno");
 var persistedChallengeId = 1_234_567_890L;
 var earlierRaceSnapshot = TrapChallengeService.BuildPublishingSnapshot(
@@ -112,6 +115,13 @@ Check(suspendedChallengeSnapshot.Event.Status == "2" &&
       RacingPublisher.ShouldDisplayMarket(true, suspendedChallengeSnapshot.Markets.Single()) &&
       suspendedChallengeSnapshot.Markets.Single().Selections.All(x => x.Active == 0 && x.Display == 1),
     "Suspended Trap Challenge publishes event status 2 and remains visible with inactive market and selections");
+Check(suspendedChallengeSnapshot.Event.Name == "Monmore Meeting" &&
+      suspendedChallengeSnapshot.Event.StartTimeUnix == 1_800_000_600 &&
+      suspendedChallengeSnapshot.Event.EventId == challengeSnapshot.Event.EventId &&
+      suspendedChallengeSnapshot.Markets.Single().MarketId == challengeMarket.MarketId &&
+      suspendedChallengeSnapshot.Markets.Single().Selections.Select(s=>s.SelectionId)
+          .SequenceEqual(challengeMarket.Selections.Select(s=>s.SelectionId)),
+    "Meeting follows the exact next unrun race while retaining IDs and OFF suspension");
 var unpricedFutureRace = uniformTrapRace with
 {
     EventId = 3,
@@ -124,6 +134,12 @@ var suspendedWithMissingPrices = TrapChallengeService.BuildPublishingSnapshot(
 Check(suspendedWithMissingPrices.Event.Status == "2" &&
       !suspendedWithMissingPrices.Markets.Single().Active,
     "A race-off suspension takes priority over missing prices in a later race");
+Check(suspendedWithMissingPrices.Event.StartTimeUnix == unpricedFutureRace.StartTimeUnix,
+    "An unpriced next race still supplies the meeting timestamp");
+var inactiveUnrunSnapshot=TrapChallengeService.BuildPublishingSnapshot("Monmore",
+    [uniformTrapRace with {Status="2",Active=false},unpricedFutureRace with {Active=false}])!;
+Check(inactiveUnrunSnapshot.Event.StartTimeUnix == unpricedFutureRace.StartTimeUnix,
+    "An inactive upcoming card is not mistaken for an OFF race when choosing its timestamp");
 TrapChallengeRaceInput WonBy(int eventId, int trap) => uniformTrapRace with
 {
     EventId = eventId,

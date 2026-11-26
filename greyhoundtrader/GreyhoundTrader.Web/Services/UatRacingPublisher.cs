@@ -396,7 +396,8 @@ internal sealed class RacingPublisher(
         var isEvent = message.GetValueOrDefault("messageType") is "event"
             && message.GetValueOrDefault("sportId") is int sportId && sportId == 4
             && message.GetValueOrDefault("eventName") is string name
-            && name.EndsWith(" Trap Challenge", StringComparison.OrdinalIgnoreCase);
+            && (name.EndsWith(" Meeting", StringComparison.OrdinalIgnoreCase)
+                || name.EndsWith(" Trap Challenge", StringComparison.OrdinalIgnoreCase));
         var isMarket = message.GetValueOrDefault("messageType") is "market"
             && message.GetValueOrDefault("marketTypeId") is int marketTypeId
             && marketTypeId == TrapChallengeService.MarketTypeId;

@@ -71,7 +71,11 @@ public sealed class TrapChallengeService(
             : [];
         var prices = SnapPrices(board.Selections);
         var displayMeetingName = DisplayMeetingName(meeting, isEveningSession);
-        var eventName = $"{displayMeetingName} Trap Challenge";
+        var eventName = $"{displayMeetingName} Meeting";
+        // Keep identity anchored to the first race, but let the front end place
+        // the meeting beside its next unrun race, including an unpriced card.
+        var nextRace = ordered.FirstOrDefault(race => !race.InProgress &&
+            Normalise(race.Status) is "0" or "pre" or "pre game" or "scheduled") ?? ordered[^1];
         var selections = board.Selections.Select((selection, index) => new GeneratedSelection
         {
             EventId = eventId,
@@ -100,7 +104,7 @@ public sealed class TrapChallengeService(
             marketId, "Trap Challenge", MarketTypeId, 10,
             marketActive, !complete, selections);
         var challengeEvent = new PricingEvent(
-            eventId, 4, displayMeetingName, eventName, firstRace.StartTimeUnix,
+            eventId, 4, displayMeetingName, eventName, nextRace.StartTimeUnix,
             complete ? "3" : board.Status == "suspended" ? "2" : "0",
             DateTimeOffset.UtcNow.ToUnixTimeSeconds());
         return new GeneratedEventSnapshot(challengeEvent, [market]);

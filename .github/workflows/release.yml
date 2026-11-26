@@ -25,6 +25,14 @@ jobs:
           name: traders-${{ github.sha }}
           path: artifacts/*.zip
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          name: greyhounds-application-${{ github.sha }}
+          path: |
+            artifacts/*/greyhounds/GreyhoundTrader.Web.dll
+            artifacts/*/greyhounds/GreyhoundTrader.Web.pdb
+            artifacts/*/manifest.json
+          if-no-files-found: error
   release:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: verify
