@@ -8,7 +8,26 @@ on:
 permissions:
   contents: read
 jobs:
+  cancellation-db:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: isolated-cancellation-ci
+        ports: ['3306:3306']
+        options: --health-cmd="mysqladmin ping -h localhost -pisolated-cancellation-ci" --health-interval=10s --health-timeout=5s --health-retries=12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Cancellation policy and isolated SQL recovery checks
+        env:
+          RG_CANCELLATION_TEST_MYSQL: 'Server=127.0.0.1;Port=3306;User ID=root;Password=isolated-cancellation-ci;Database=mysql;SslMode=Disabled'
+        run: dotnet run --project CancellationTests/CancellationTests.csproj -c Release
   verify:
+    needs: cancellation-db
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4

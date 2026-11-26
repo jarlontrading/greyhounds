@@ -23,6 +23,7 @@ internal sealed class RacingResultRepository
             MaximumPoolSize=1,ConnectionIdleTimeout=30
         }.ConnectionString;
     }
+    internal RacingResultRepository(string connectionString,ILogger<RacingResultRepository> logger){_connectionString=connectionString;_logger=logger;}
     private MySqlConnection OpenConnection()=>new(_connectionString);
 
     public async Task<IReadOnlyList<ResultCandidate>> GetCandidatesAsync(CancellationToken cancellationToken, bool allToday = false)
@@ -91,21 +92,22 @@ internal sealed class RacingResultRepository
         if(resultPage.IsFinal&&resultPage.IsVoid)
         {
             var alreadyVoided=StatusEquals(ev.Status,"3")&&
-                selections.Count>0&&selections.All(selection=>selection.Result==RacingResultCodes.Void&&!selection.Active);
+                selections.Count>0&&selections.All(selection=>!MeetingCancellationPolicy.Unsettled(selection.Result)&&!selection.Active);
             if(alreadyVoided)
             {
                 await transaction.RollbackAsync(CancellationToken.None);
                 return null;
             }
+            var protectedResults=selections.Where(selection=>!MeetingCancellationPolicy.Unsettled(selection.Result)).Select(selection=>selection.SelectionId).ToHashSet();
             foreach(var selection in selections)
             {
                 selection.Active=false;
                 selection.Display=false;
-                selection.Result=RacingResultCodes.Void;
+                if(MeetingCancellationPolicy.Unsettled(selection.Result))selection.Result=RacingResultCodes.Void;
             }
             await using(var voidRace=new MySqlCommand("""
                 UPDATE spuno_selections
-                SET result_text=@voidResult,active=0,display=0
+                SET result_text=CASE WHEN result_text IS NULL OR result_text REGEXP '^[[:space:]]*$' THEN @voidResult ELSE result_text END,active=0,display=0
                 WHERE event_id=@eventId;
                 UPDATE spuno_markets SET active=0,display=0 WHERE event_id=@eventId;
                 UPDATE spuno_events SET status='3',active=0,display=0,in_progress=0 WHERE event_id=@eventId;
@@ -116,7 +118,7 @@ internal sealed class RacingResultRepository
                 voidRace.Parameters.AddWithValue("@eventId",resultPage.EventId);
                 await voidRace.ExecuteNonQueryAsync(cancellationToken);
             }
-            await ReplaceRunnerResultsAsync(connection,transaction,resultPage,selections,cancellationToken);
+            await ReplaceRunnerResultsAsync(connection,transaction,resultPage,selections,cancellationToken,protectedResults);
             await transaction.CommitAsync(cancellationToken);
             var voidMarkets=selections.GroupBy(selection=>selection.MarketId).Select(group=>
             {
@@ -130,7 +132,7 @@ internal sealed class RacingResultRepository
                     Identifier=selection.Identifier,PriceBack=selection.Price,PriceBackLast=selection.PreviousPrice,
                     PriceLay=0,Active=0,Display=0,Scratch=selection.Scratch?1:0,
                     Rule4Time=selection.Rule4Time,Rule4Deduction=selection.Rule4Deduction,
-                    AssetUrl=selection.AssetUrl,Result=RacingResultCodes.Void
+                    AssetUrl=selection.AssetUrl,Result=selection.Result
                 }).ToList();
                 return new GeneratedMarket(first.MarketId,marketName,MarketType(suffix),DisplayOrder(suffix),false,false,generated);
             }).OrderBy(market=>market.DisplayOrder).ToList();
@@ -453,6 +455,7 @@ internal sealed class RacingResultRepository
     public async Task<PricingEvent?> RevertFalseResultToSuspendedAsync(
         long eventId,CancellationToken cancellationToken)
     {
+        if(MeetingCancellationFence.IsCancelled(eventId))return null;
         await using var connection=OpenConnection();
         await connection.OpenAsync(cancellationToken);
         PricingEvent? ev=null;
@@ -838,25 +841,11 @@ internal sealed class RacingResultRepository
         if(ev is null||StatusEquals(ev.Status,"3"))return null;
         var selections=await LoadSelectionsAsync(connection,transaction,eventId,cancellationToken);
         if(selections.Count==0)return null;
-        // This runs when no source could be matched inside the stale window. It used to set
-        // active=0,display=0 and never touch result_text, so the race was published as
-        // resulted with NULL results - liabilities neither paid nor refunded - and nothing
-        // could reach it afterwards because the event was already status 3.
-        //
-        // "We could not match a result" and "there was no result" are different facts, and
-        // only the second justifies a void. A void is the only one of the two this schema can
-        // express, so take it and make the alert loud enough to act on.
-        var unresulted=selections.Where(x=>x.Result is null).ToList();
-        foreach(var selection in unresulted) selection.Result=RacingResultCodes.Void;
-        _logger.LogError(
-            "Closing event {EventId} ({EventName}) with no matched result; voiding {VoidedCount} of {SelectionCount} selections that were never settled.",
-            eventId,ev.Name,unresulted.Count,selections.Count);
-        await using(var closeSelections=new MySqlCommand("UPDATE spuno_selections SET active=0,display=0,result_text=COALESCE(result_text,@voidResult) WHERE event_id=@eventId",connection,transaction))
-        {
-            closeSelections.Parameters.AddWithValue("@eventId",eventId);
-            closeSelections.Parameters.AddWithValue("@voidResult",RacingResultCodes.Void);
-            await closeSelections.ExecuteNonQueryAsync(cancellationToken);
-        }
+        // A missing result is not proof of cancellation. Close betting without
+        // inventing void results; the confirmed-cancellation coordinator owns voids.
+        _logger.LogError("Closing event {EventId} without a trustworthy result; unsettled selections require review.",eventId);
+        await using(var closeSelections=new MySqlCommand("UPDATE spuno_selections SET active=0,display=0 WHERE event_id=@eventId",connection,transaction))
+        {closeSelections.Parameters.AddWithValue("@eventId",eventId);await closeSelections.ExecuteNonQueryAsync(cancellationToken);}
         await using(var closeMarkets=new MySqlCommand("UPDATE spuno_markets SET active=0,display=0 WHERE event_id=@eventId",connection,transaction))
         {closeMarkets.Parameters.AddWithValue("@eventId",eventId);await closeMarkets.ExecuteNonQueryAsync(cancellationToken);}
         await using(var closeEvent=new MySqlCommand("""
@@ -878,7 +867,16 @@ internal sealed class RacingResultRepository
     }
 
     private static async Task<PricingEvent?> LoadEventAsync(MySqlConnection c,MySqlTransaction t,long eventId,CancellationToken ct)
-    {await using var cmd=new MySqlCommand("SELECT event_id,sport_id,meeting,ev_name,start_time_unix,status,0 FROM spuno_events WHERE event_id=@id FOR UPDATE",c,t);cmd.Parameters.AddWithValue("@id",eventId);await using var r=await cmd.ExecuteReaderAsync(ct);return await r.ReadAsync(ct)?new(r.GetInt64(0),r.GetInt32(1),r.GetString(2),r.GetString(3),r.GetInt64(4),r.GetString(5),0):null;}
+    {
+        PricingEvent? ev;
+        await using(var cmd=new MySqlCommand("SELECT event_id,sport_id,meeting,ev_name,start_time_unix,status,0 FROM spuno_events WHERE event_id=@id FOR UPDATE",c,t))
+        {
+            cmd.Parameters.AddWithValue("@id",eventId);await using var r=await cmd.ExecuteReaderAsync(ct);
+            ev=await r.ReadAsync(ct)?new(r.GetInt64(0),r.GetInt32(1),r.GetString(2),r.GetString(3),r.GetInt64(4),r.GetString(5),0):null;
+        }
+        if(ev is null||await MeetingCancellationFence.Stored(c,t,eventId,ct))return null;
+        return ev;
+    }
     private static async Task<List<PricingRunner>> LoadSelectionsAsync(MySqlConnection c,MySqlTransaction t,long eventId,CancellationToken ct)
     {var o=new List<PricingRunner>();await using var cmd=new MySqlCommand("SELECT event_id,market_id,selection_id,competitor_id,name,identifier,price_back,price_back_last,active,display,scratch,asset_url,result_text,market_name,rule4_time,rule4_deduction,line FROM spuno_selections WHERE event_id=@id ORDER BY market_id,selection_id FOR UPDATE",c,t);cmd.Parameters.AddWithValue("@id",eventId);await using var r=await cmd.ExecuteReaderAsync(ct);while(await r.ReadAsync(ct))o.Add(new(){EventId=r.GetInt64(0),MarketId=r.GetInt64(1),SelectionId=r.GetInt64(2),CompetitorId=r.IsDBNull(3)?null:r.GetInt64(3),Name=r.GetString(4),Identifier=r.GetString(5),Price=r.GetDouble(6),PreviousPrice=r.GetDouble(7),Active=r.GetBoolean(8),Display=r.GetBoolean(9),Scratch=r.GetBoolean(10),AssetUrl=r.IsDBNull(11)?null:r.GetString(11),Result=r.IsDBNull(12)?null:r.GetString(12),MarketName=r.IsDBNull(13)?null:r.GetString(13),Rule4Time=r.IsDBNull(14)?null:r.GetValue(14).ToString(),Rule4Deduction=r.IsDBNull(15)?0:r.GetDouble(15),Line=r.IsDBNull(16)?0:r.GetDouble(16)});return o;}
 
@@ -918,10 +916,11 @@ internal sealed class RacingResultRepository
             : null;
     }
 
-    private static async Task ReplaceRunnerResultsAsync(MySqlConnection c,MySqlTransaction t,ResultPage page,List<PricingRunner> selections,CancellationToken ct)
+    private static async Task ReplaceRunnerResultsAsync(MySqlConnection c,MySqlTransaction t,ResultPage page,List<PricingRunner> selections,CancellationToken ct,IReadOnlySet<long>? preserved=null)
     {
+        var preserveClause=preserved is {Count:>0}?" AND selection_id NOT IN ("+string.Join(',',preserved.Select(id=>id.ToString(CultureInfo.InvariantCulture)))+")":"";
         await using(var delete=new MySqlCommand(
-                        "DELETE FROM web_runner_results WHERE event_id=@eventId",c,t))
+                        "DELETE FROM web_runner_results WHERE event_id=@eventId"+preserveClause,c,t))
         {
             delete.Parameters.AddWithValue("@eventId",page.EventId);
             await delete.ExecuteNonQueryAsync(ct);
@@ -935,7 +934,7 @@ internal sealed class RacingResultRepository
             // separate rows carrying the same trap. Keep the first (finishing)
             // row; otherwise the later duplicate overwrites the winner position
             // in web_runner_results and makes recovery replay forever.
-            if(s is null||!storedSelections.Add(s.SelectionId))continue;
+            if(s is null||preserved?.Contains(s.SelectionId)==true||!storedSelections.Add(s.SelectionId))continue;
             await using var cmd=new MySqlCommand("""
         INSERT INTO web_runner_results(event_id,selection_id,competitor_id,identifier,runner_name,finishing_position,result_status,source_url,resulted_at_utc)
         VALUES(@event,@selection,@competitor,@identifier,@name,@position,@status,@url,UTC_TIMESTAMP(6))

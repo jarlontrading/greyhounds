@@ -58,6 +58,13 @@ builder.Services.AddSingleton<RacingFeedRepository>(sp =>
 });
 builder.Services.AddSingleton<CanonicalEventService>();
 builder.Services.AddSingleton<RacingPublisher>();
+builder.Services.AddSingleton(new MeetingCancellationOptions(4));
+builder.Services.AddSingleton<MeetingCancellationStore>();
+builder.Services.AddSingleton<IMeetingCancellationExtras,MeetingCancellationExtras>();
+builder.Services.AddSingleton<MeetingCancellationService>();
+builder.Services.AddSingleton<CancellationDelivery>();
+builder.Services.AddSingleton<MeetingCancellationWorker>();
+builder.Services.AddHttpClient("MeetingCancellationEvidence",client=>{client.Timeout=TimeSpan.FromSeconds(15);client.DefaultRequestHeaders.UserAgent.ParseAdd("Sportuno-RacingTrader/1.0");});
 builder.Services.AddSingleton<RacingActivityLog>();
 builder.Services.AddSingleton<RacingFeedDiagnostics>();
 builder.Services.AddSingleton<RacingDiagnosticCapture>();
@@ -106,6 +113,7 @@ builder.Services.AddSingleton<RacingResultRepository>();
 builder.Services.AddHttpClient<RacingResultClient>(client => client.Timeout = TimeSpan.FromSeconds(20));
 if (hostedWorkersEnabled)
 {
+    builder.Services.AddHostedService(provider=>provider.GetRequiredService<MeetingCancellationWorker>());
     // Resolve and start workers after Kestrel has been allowed to bind. A browser or
     // external-feed constructor must never leave a live process with no HTTP listener.
     builder.Services.AddSingleton<RacingSuspensionWorker>();
@@ -138,6 +146,8 @@ if (hostedWorkersEnabled)
 }
 
 var app = builder.Build();
+await app.Services.GetRequiredService<MeetingCancellationStore>().Initialise(app.Lifetime.ApplicationStopping);
+app.MapMeetingCancellations();
 app.UseExceptionHandler();
 app.UseDefaultFiles();
 app.UseStaticFiles();

@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 
 namespace RacingTrader.Web.Services;
 
-internal sealed class TrapChallengePublishingWorker(
+internal sealed partial class TrapChallengePublishingWorker(
     RacingRepository repository,
     TrapChallengeService trapChallenges,
     RacingPublisher publisher,

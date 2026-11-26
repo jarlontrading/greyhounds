@@ -19,7 +19,10 @@ public sealed class TrapChallengeService(
             await repository.GetMeetingTrapChallengeRacesAsync(meeting, cancellationToken),
             anchorStartTimeUnix);
         races = timeform.ApplyTrapChallengeFallback(meeting, races);
-        return Calculate(meeting, races);
+        var board=Calculate(meeting,races);
+        if(races.Count>0&&MeetingCancellationFence.IsMeetingCancelled(4,meeting,DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeSeconds(races[0].StartTimeUnix),UkTimeZone).DateTime)))
+            return board with{Status="cancelled",Message="Meeting cancelled: unsettled selections void"};
+        return board;
     }
 
     internal async Task<GeneratedEventSnapshot?> BuildPublishingSnapshotAsync(
@@ -58,6 +61,8 @@ public sealed class TrapChallengeService(
         var board = Calculate(meeting, ordered);
         var firstRace = ordered[0];
         var eventId = stableEventId ?? checked(EventNamespace + firstRace.EventId);
+        var date=DateOnly.FromDateTime(TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeSeconds(firstRace.StartTimeUnix),UkTimeZone).DateTime);
+        if(MeetingCancellationFence.IsCancelled(eventId)||MeetingCancellationFence.IsMeetingCancelled(4,meeting,date))return null;
         var marketId = checked(eventId * 10_000 + MarketSuffix);
         var complete = board.Status == "resulted";
         var marketActive = board.Status == "active";

@@ -7,8 +7,9 @@ using RabbitMQ.Client;
 
 namespace RacingTrader.Web.Services;
 
-internal sealed class RacingPublisher(
+internal sealed partial class RacingPublisher(
     ExternalSettings settings,
+    MeetingCancellationStore cancellations,
     IConfiguration configuration,
     RacingDiagnosticCapture diagnostics,
     RaceAuditTrail audit,
@@ -26,12 +27,14 @@ internal sealed class RacingPublisher(
 
     public async Task PublishAsync(GeneratedEventSnapshot snapshot, CancellationToken cancellationToken)
     {
+        if(MeetingCancellationFence.Blocks(snapshot.Event.EventId,snapshot.Event.SportId,snapshot.Event.Meeting,snapshot.Event.StartTimeUnix))return;
         if (snapshot.Event.Status is "2" or "3")
             _terminalEvents[snapshot.Event.EventId] = 0;
         var eventGate = _eventGates.GetOrAdd(snapshot.Event.EventId, _ => new SemaphoreSlim(1, 1));
         await eventGate.WaitAsync(cancellationToken);
         try
         {
+            if(MeetingCancellationFence.Blocks(snapshot.Event.EventId,snapshot.Event.SportId,snapshot.Event.Meeting,snapshot.Event.StartTimeUnix))return;
             var terminal = snapshot.Event.Status is "2" or "3";
             if (terminal) _terminalEvents[snapshot.Event.EventId] = 0;
             else
@@ -171,6 +174,7 @@ internal sealed class RacingPublisher(
         GeneratedEventSnapshot? latestOpenSnapshot,
         CancellationToken cancellationToken)
     {
+        if(MeetingCancellationFence.Blocks(ev.EventId,ev.SportId,ev.Meeting,ev.StartTimeUnix))return;
         var terminal = ev.Status is "2" or "3";
         if (terminal) _terminalEvents[ev.EventId] = 0;
         else if (_terminalEvents.ContainsKey(ev.EventId)) return;
@@ -371,6 +375,10 @@ internal sealed class RacingPublisher(
         await _gate.WaitAsync(cancellationToken);
         try
         {
+            if(eventId is {} cancellationId&&MeetingCancellationFence.IsCancelled(cancellationId))return;
+            if(exchange.EndsWith("selections",StringComparison.Ordinal)&&message is Dictionary<string,object?> frame&&
+                frame.TryGetValue("marketId",out var frameId)&&Convert.ToInt64(frameId)%10000 is 9600 or 9700)
+                await cancellations.RecordMeetingFrame(JsonSerializer.SerializeToElement(message,JsonOptions),cancellationToken);
             // Recheck after acquiring the actual channel lock. A stale price
             // message may have queued before suspension but must never publish
             // after the terminal event has claimed this ID.
