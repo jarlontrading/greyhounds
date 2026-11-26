@@ -91,6 +91,15 @@ internal sealed class BetfredRacingService(
         Environment.GetEnvironmentVariable("GREYHOUNDTRADER_BETFRED_DAILY_REFRESH_ENABLED"),
         "true", StringComparison.OrdinalIgnoreCase);
 
+    internal BetfredOffRaceIdentity? GetOffRaceIdentity(long eventId)
+    {
+        if (_metadata.TryGetValue(eventId, out var metadata))
+            return new(eventId, 4, metadata.Meeting, metadata.StartTimeUnix);
+        if (_races.TryGetValue(eventId, out var race))
+            return new(eventId, 4, race.Meeting, race.StartTimeUnix);
+        return null;
+    }
+
     public BetfredSubscriptionStatus Status => new(
         _bridgeConnected && !_geoRestricted,
         ManagedBrowserId, BrowserProfile,

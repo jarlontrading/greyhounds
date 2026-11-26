@@ -7,7 +7,7 @@ internal sealed record BetfredSuspensionClientStatus(
     DateTime? LastSignalUtc, int SignalCount, string? LastError);
 
 internal sealed class BetfredSuspensionClient(
-    IHttpClientFactory clients, ILogger<BetfredSuspensionClient> logger) : BackgroundService
+    IHttpClientFactory clients, ILogger<BetfredSuspensionClient> logger, BetfredRacingService betfred) : BackgroundService
 {
     private const string ServiceUrl = "http://127.0.0.1:5388";
     private volatile Signal[] _signals = [];
@@ -22,15 +22,12 @@ internal sealed class BetfredSuspensionClient(
 
     public bool TryGetRaceOffSignal(PricingEvent racingEvent, out string reason)
     {
-        var meeting = RacingEventNames.MeetingKey(racingEvent.Meeting);
-        var time = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(
-            DateTimeOffset.FromUnixTimeSeconds(racingEvent.StartTimeUnix), "GMT Standard Time").ToString("HH:mm");
         foreach (var signal in _signals.OrderByDescending(item => item.ObservedAtUtc))
         {
-            if (DateTime.UtcNow - signal.ObservedAtUtc > TimeSpan.FromMinutes(10)) continue;
-            var textKey = RacingEventNames.MeetingKey(signal.MeetingText);
-            if (!textKey.Contains(meeting, StringComparison.Ordinal) ||
-                !signal.CardText.Contains(time, StringComparison.OrdinalIgnoreCase)) continue;
+            // Course headings disappeared from the DOM group text. Join the
+            // exact provider event ID to the existing dated metadata cache.
+            if (!BetfredOffIdentity.Matches(racingEvent, betfred.GetOffRaceIdentity(signal.BetfredEventId),
+                    signal.BetfredEventId, signal.CardText, signal.ObservedAtUtc, DateTime.UtcNow)) continue;
             reason = $"Betfred SERVICE reported Race is Running (event {signal.BetfredEventId}, observed {signal.ObservedAtUtc:O}).";
             return true;
         }

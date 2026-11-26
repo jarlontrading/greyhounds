@@ -30,6 +30,7 @@ if(args.Contains("--preview-live"))
 
 var assertions=0;
 void Check(bool value,string message){assertions++;if(!value)throw new Exception(message);}
+OffSignalIdentityChecks.Run(Check);
 JsonElement Selection(string? result,string id="000000000000000000012345678901")=>JsonSerializer.SerializeToElement(new{selectionId=id,name="Selection",result,active=1,display=1,priceBack=6});
 foreach(var result in new string?[]{null,""," ","1","0","99","-1"})
 {
