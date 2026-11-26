@@ -1,0 +1,11 @@
+# Betfred health fixes — 26 November 2026
+
+The post-release health check found two independent matching defects. Betfred labels the horse course `Chelmsford` while the local card uses `Chelmsford City`; the horse canonical-name alias was restored in `90a0854`, retaining the existing date/time and runner fingerprint checks. All nine Chelmsford races then matched and new Betfred display prices were stored.
+
+The standalone OFF monitors correctly detected RUNNING cards, but their DOM group text now contained race times without a course heading. Both clients previously searched that text for a meeting name and could silently reject a valid signal. Both clients now join the exact Betfred event ID to the existing provider metadata cache, verifying sport, canonical course, dated start, fresh observation and a matching RUNNING clock token. No time-only fallback was introduced. No extra polling, database or browser was added.
+
+Racing source `b79a1742dbefe2bad34ada2aac764a53e0f5eed3` passed [release CI 45860819542](https://github.com/jarlontrading/racing/actions/runs/45860819542) and was deployed at 16:43:25 UTC. Greyhound source `5ab9a0634a0fe625953fa23f31583a3d1557ca45` passed [release CI 45860829289](https://github.com/jarlontrading/greyhounds/actions/runs/45860829289) and was deployed at 16:43:42 UTC. DLL/PDB hashes were verified against each clean CI manifest. The isolated CI cancellation/SQL recovery job includes 32 new OFF identity acceptance/rejection checks. Racing's 82 result regressions, place-pricing suites and greyhound distance checks also passed.
+
+Existing BetAhoy, BetsAPI OFF and horse Spreadex fallback behaviour remains in place. The change does not make Betfred exclusive or alter pricing/settlement rules. Both running applications retain DiscountedHarville place pricing and PROD/UAT publishing. Health-check evidence is retained under `D:\Temp\trader-health-20261126-1626`; deployment receipts and rollback binaries are under the corresponding `D:\TraderReleases\places-20261126-*` folders.
+
+The user requested same-chat checks every 30 minutes until 19:26:35 Europe/London. No background automation tool was available; the agent kept the chat active. The monitoring-state file records checkpoints, findings and completed reports. A closed/disconnected chat is not a scheduled background monitor.
