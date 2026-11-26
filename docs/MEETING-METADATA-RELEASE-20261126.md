@@ -1,0 +1,11 @@
+# Greyhound meeting metadata release — 26 November 2026
+
+Deployed source `8bd1f19af6bb884b76e1193e5666188d7c626fb3`, CI package `v0.0.0-ci.3`, workflow run 45802325647, at 10:34 UTC. Both PROD and UAT publishing remained enabled after restart; configuration was unchanged. Horse Racing Trader was not changed or restarted.
+
+Greyhound parent events now use `<Track> Meeting`, retaining the existing Evening qualifier when needed to distinguish same-track sessions. The child market remains Trap Challenge. Parent timestamps equal the exact next unrun race start, including unpriced/inactive upcoming cards. OFF/result handling and pricing calculations are unchanged. Event identities remain anchored to the original first race and the existing persisted mapping; market/selection identities are unchanged. Metadata changes now invalidate the publishing signature even when prices/state have not changed. Singles-only detection supports both the new Meeting suffix and historical Trap Challenge names.
+
+Validation: 3,815 local offline distance/trap-challenge checks passed, and GitHub's complete test-and-package workflow succeeded. CI DLL/PDB hashes were verified against the manifest before installation. All 10 current meeting events were observed on PRODevents and DEMOevents (20 messages), with correct names/timestamps, singlesOnly=true, and preserved event/market/selection IDs. This verifies broker messages, not a downstream frontend receipt.
+
+Evidence/package: `D:/TraderReleases/greyhounds-meeting-20261126-8bd1f19`. Rollback binary/source copies: `D:/TraderReleases/rollback/greyhounds-meeting-20261126-8bd1f19`. Existing live path and launcher are unchanged. Only GreyhoundTrader.Web.dll/PDB were replaced, and the three legacy source files were synchronized after verification. No schema changes, voids or automatic cancellation handling were introduced.
+
+Automatic cancellation remains separate proposed work for both traders. Detecting a confirmed abandonment, safely voiding affected unrun races, preserving completed results, handling meeting products under their own rules, hiding the affected objects and retrying failed downstream publishing still require implementation and validation. Missing feeds or routine suspension must not be treated as proof of cancellation.
