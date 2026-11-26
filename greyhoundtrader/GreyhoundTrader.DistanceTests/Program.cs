@@ -96,6 +96,14 @@ Check(earlierRaceSnapshot.Event.EventId == persistedChallengeId &&
       earlierRaceSnapshot.Event.StartTimeUnix == uniformTrapRace.StartTimeUnix - 600,
     "Persisted meeting event ID survives a newly discovered earlier first race");
 var challengeMarket = challengeSnapshot.Markets.Single();
+Check(TrapChallengePublishingWorker.Signature(challengeSnapshot) !=
+      TrapChallengePublishingWorker.Signature(challengeSnapshot with
+          {Event=challengeSnapshot.Event with {StartTimeUnix=challengeSnapshot.Event.StartTimeUnix+600}}),
+    "Meeting timestamp changes are republished even with unchanged prices and betting state");
+Check(TrapChallengePublishingWorker.Signature(challengeSnapshot) !=
+      TrapChallengePublishingWorker.Signature(challengeSnapshot with
+          {Event=challengeSnapshot.Event with {Name="Monmore Evening Meeting"}}),
+    "Meeting name changes are republished even with unchanged prices and betting state");
 Check(challengeMarket.Name == "Trap Challenge" && challengeMarket.MarketTypeId == TrapChallengeService.MarketTypeId &&
       challengeMarket.Selections.Select(x => x.SelectionId).Distinct().Count() == 6,
     "Trap Challenge publishes one market with six stable selection IDs");

@@ -120,11 +120,13 @@ internal sealed class TrapChallengePublishingWorker(
         return new GeneratedEventSnapshot(resulted.Event with { Status = "0" }, markets);
     }
 
-    private static string Signature(GeneratedEventSnapshot snapshot)
+    internal static string Signature(GeneratedEventSnapshot snapshot)
     {
         var market = snapshot.Markets[0];
         return string.Join('|', new[]
         {
+            snapshot.Event.Name,
+            snapshot.Event.StartTimeUnix.ToString(CultureInfo.InvariantCulture),
             snapshot.Event.Status,
             market.Active ? "1" : "0",
             market.Display ? "1" : "0",
