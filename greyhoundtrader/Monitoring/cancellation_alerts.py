@@ -126,7 +126,8 @@ def query_rows(config, app):
                              "--skip-column-names", "--raw", "--host=" + host,
                              "--user=" + values[prefix + "_MYSQL_USER"],
                              "--database=" + database, "--execute=" + sql],
-                            env=child_env, capture_output=True, text=True, timeout=15)
+                            env=child_env, capture_output=True, text=True, timeout=15,
+                            creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0)
     if result.returncode:
         raise RuntimeError("Cancellation query failed")  # Never expose SQL credentials/stderr.
     return [json.loads(line) for line in result.stdout.splitlines() if line.strip()]
