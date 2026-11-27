@@ -65,3 +65,15 @@ and zero-job failure. Live read-only validation covered both schemas and yesterd
 Laurel Park confirmation: ten events, twenty acknowledged jobs, zero pending.
 The separate Telegram destination must be connected and a live test acknowledged
 before calling notification delivery operational.
+
+## Live activation — 27 November 2026
+
+The new private channel is named **SPORTUNO ALERT**. The existing bot was added
+as administrator with Post Messages enabled and other optional administrator
+permissions disabled. Bot API getChat/getChatMember verified channel identity
+and posting permission. The destination is configured privately; the old alert
+channel configuration was preserved. A clearly labelled setup test was queued
+through the live SQLite monitor and acknowledged at **11:17:10 UTC**, with zero
+retries; its arrival was also verified visually in Telegram. Both database
+sources are healthy, the channel is configured and there are no pending notices.
+The observer's MariaDB subprocesses run with CREATE_NO_WINDOW on Windows.
