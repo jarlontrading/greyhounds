@@ -19,6 +19,8 @@ jobs:
         options: --health-cmd="mysqladmin ping -h localhost -pisolated-cancellation-ci" --health-interval=10s --health-timeout=5s --health-retries=12
     steps:
       - uses: actions/checkout@v4
+      - name: Test durable cancellation alert observer
+        run: python3 -m unittest discover -s greyhoundtrader/Monitoring -p test_cancellation_alerts.py -v
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
